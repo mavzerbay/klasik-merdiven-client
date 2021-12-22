@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TopMenuComponent } from './components/top-menu/top-menu.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    TopMenuComponent,
+    FooterComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+  ],
+  exports: [
+    TopMenuComponent,
+    FooterComponent,
   ]
 })
 export class SharedModule { }
