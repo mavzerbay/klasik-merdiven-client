@@ -72,6 +72,21 @@ export class MavDataService {
       })
     );
   }
+  getData<T extends BaseModel>(url: string): Observable<IApiResponse<T>> {
+
+    const token = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', `application/json`);
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<IApiResponse<T>>(`${this.baseURL}${url}`, { observe: 'response', headers }).pipe(
+      map((response) => {
+        if (isDevMode())
+          console.log("Dönen veri", <IApiResponse<T>>response.body);
+        return <IApiResponse<T>>response.body;
+      })
+    );
+  }
 
   delete(url: string, id: string): Observable<IApiResponse<boolean>> {
     return this.http.delete(`${this.baseURL}${url}/${id}`, { observe: 'response' }).pipe(

@@ -1,90 +1,93 @@
-<section class="hero-wrap"
-    style="background-image: url(&quot;images/xbg_1.jpg.pagespeed.ic.0PbJ1luY4h.webp&quot;); background-position: 50% 6650px;"
-    data-stellar-background-ratio="0.3">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row no-gutters slider-text align-items-center">
-            <div class="col-md-10 col-lg-7 ftco-animate d-flex align-items-end fadeInUp ftco-animated">
-                <div class="text">
-                    <h1 class="mb-4">Modern <span>Innovative</span> Architecture</h1>
-                    <p style="font-size: 18px;">From as low as $20 A small river named Duden flows by their place and
-                        supplies it with the necessary regelialia.</p>
-                    <div class="d-flex meta">
-                        <div class="">
-                            <p class="mb-0"><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                    class="btn btn-primary py-3 px-2 px-md-4">Explore Projects</a></p>
-                        </div>
-                        <a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                            class="d-flex align-items-center button-link">
-                            <div class="button-video d-flex align-items-center justify-content-center">
-                                <span class="fa fa-play"></span>
+<p-carousel [value]="slideMediaList" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000"
+    [showIndicators]="false" [showNavigators]="false">
+    <ng-template let-media pTemplate="item">
+        <section class="hero-wrap"
+            style="background-image: url(&quot;{{media.backgroundImagePath}}&quot;); background-position: 50% 0%;"
+            data-stellar-background-ratio="0.3">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row no-gutters slider-text align-items-center">
+                    <div class="col-md-10 col-lg-7 ftco-animate d-flex align-items-end fadeInUp ftco-animated">
+                        <div class="text">
+                            <h1 class="mb-4" *ngIf="media.title">{{media.title}}</h1>
+                            <p *ngIf="media.summary" [style]="media.textStyle?media.textStyle:'font-size:18px'">
+                                {{media.summary}}</p>
+                            <div class="d-flex meta" *ngIf="media.buttonText">
+                                <div class="">
+                                    <p class="mb-0">
+                                        <a href="https://preview.colorlib.com/theme/archlab/index.html#"
+                                            class="btn btn-primary py-3 px-2 px-md-4"
+                                            [style]="media.buttonStyle">{{media.buttonText}}</a>
+                                    </p>
+                                </div>
                             </div>
-                            <span>Watch our video</span>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<section class="ftco-section ftco-no-pb ftco-no-pt bg-primary">
+        </section>
+    </ng-template>
+</p-carousel>
+<section class="ftco-section ftco-no-pb ftco-no-pt bg-primary"
+    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
     <div class="container">
         <div class="row d-flex no-gutters">
             <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center"><span
-                            class="flaticon-system"></span></div>
-                    <div class="media-body py-md-4">
-                        <h3>Design Process</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                        </p>
+                    <div class="icon d-flex justify-content-center align-items-center">
+                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info1Icon"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info1Title}}</h3>
+                        <p>{{getGeneralSettingsTransByCurrentLangId?.info1Description}}</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg services-darken d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center"><span
-                            class="flaticon-supervised"></span></div>
-                    <div class="media-body py-md-4">
-                        <h3>Supervision</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                        </p>
+                    <div class="icon d-flex justify-content-center align-items-center">
+                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info2Icon"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info2Title}}</h3>
+                        <p>{{getGeneralSettingsTransByCurrentLangId?.info2Description}}</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg services-lighten d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center"><span
-                            class="flaticon-accounting"></span></div>
-                    <div class="media-body py-md-4">
-                        <h3>Budget Planning</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                        </p>
+                    <div class="icon d-flex justify-content-center align-items-center">
+                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info3Icon"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info3Title}}</h3>
+                        <p>{{getGeneralSettingsTransByCurrentLangId?.info3Description}}</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center"><span
-                            class="flaticon-blueprint"></span></div>
-                    <div class="media-body py-md-4">
-                        <h3>Build a Home For You</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                        </p>
+                    <div class="icon d-flex justify-content-center align-items-center">
+                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info4Icon"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info4Title}}</h3>
+                        <p>{{getGeneralSettingsTransByCurrentLangId?.info4Description}}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section class="ftco-section ftco-no-pb ftco-no-pt">
+
+<section class="ftco-section ftco-no-pb ftco-no-pt"
+    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
     <div class="container">
         <div class="row">
             <div class="col-lg-7 order-md-last d-md-flex align-items-stretch">
-                <div class="img w-100 img-2 mr-md-2"
-                    style="background-image:url(images/xabout.jpg.pagespeed.ic.mKguWbC6Df.webp)"></div>
+                <div class="img w-100 img-2 mr-md-2" style="background-image:url(assets/images/about-us-1.png)"></div>
                 <div class="img w-100 img-2 img-overlay ml-md-2 p-4"
-                    style="background-image:url(images/xabout-2.jpg.pagespeed.ic.kQlv3nhRHC.webp)">
+                    style="background-image:url(assets/images/about-us-2.png)">
                     <div class="request-quote py-5">
                         <div class="py-2">
                             <span class="subheading">Be Part of our Business</span>
@@ -129,59 +132,45 @@
             </div>
             <div class="col-lg-5 wrap-about py-md-5 ftco-animate fadeInUp ftco-animated">
                 <div class="heading-section pr-md-5">
-                    <h2 class="mb-4">ArchLab</h2>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It
-                        is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                    <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
-                        would have been rewritten a thousand times and everything that was left from its origin would be
-                        the word "and" and the Little Blind Text should turn around and return to its own, safe country.
-                        But nothing the copy said could convince her and so it didn’t take long until a few insidious
-                        Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their
-                        agency, where they abused her for their.</p>
+                    <h2 class="mb-4">Klasik Merdiven</h2>
+                    <p>{{getGeneralSettingsTransByCurrentLangId.aboutUs}}</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section class="ftco-counter img" id="section-counter">
+<section class="ftco-counter img" id="section-counter"
+    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
     <div class="container">
         <div class="row pt-md-5">
-            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate fadeInUp ftco-animated">
+            <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
-                    <div class="text text-border d-flex align-items-center">
-                        <strong class="number" data-number="1000">1,000</strong>
-                        <span>Years of <br>Experienced</span>
+                    <div class="text text-border d-flex align-items-center justify-content-center ">
+                        <strong class="number">{{getGeneralSettingsTransByCurrentLangId?.yearsOfExperienced}}</strong>
+                        <span>{{translate('Home.YearsOfExperienced')}}</span>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate fadeInUp ftco-animated">
+            <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
-                    <div class="text text-border d-flex align-items-center">
-                        <strong class="number" data-number="2500">2,500</strong>
-                        <span>Project <br>Done</span>
+                    <div class="text text-border d-flex align-items-center justify-content-center ">
+                        <strong class="number">{{getGeneralSettingsTransByCurrentLangId?.projectDone}}</strong>
+                        <span>{{translate('Home.ProjectDone')}}</span>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate fadeInUp ftco-animated">
+            <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
-                    <div class="text text-border d-flex align-items-center">
-                        <strong class="number" data-number="500">500</strong>
-                        <span>Licensed <br>Architect</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate fadeInUp ftco-animated">
-                <div class="block-18 py-md-5 mb-md-4">
-                    <div class="text d-flex align-items-center">
-                        <strong class="number" data-number="67">67</strong>
-                        <span>Happy <br>Customers</span>
+                    <div class="text d-flex align-items-center justify-content-center ">
+                        <strong class="number">{{getGeneralSettingsTransByCurrentLangId?.happyCustomer}}</strong>
+                        <span>{{translate('Home.HappyCustomer')}}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section class="ftco-section ftco-portfolio">
+<!-- <section class="ftco-section ftco-portfolio">
     <div class="row justify-content-center no-gutters">
         <div class="col-md-12 heading-section text-center ftco-animate mb-5 fadeInUp ftco-animated">
             <span class="subheading">Projects</span>
@@ -332,334 +321,45 @@
             </div>
         </div>
     </div>
-</section>
-<section class="ftco-section testimony-section bg-light">
+</section> -->
+
+<section class="ftco-section testimony-section bg-light"
+    *ngIf="testimonialSlide && testimonialSlide.slideMedias!=null && testimonialSlide.slideMedias.length>0">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
-                <span class="subheading">Testimonial</span>
-                <h2 class="mb-3">Happy Clients</h2>
+                <h2 class="mb-3">{{translate('Home.CustomerFeedBack')}}</h2>
             </div>
         </div>
         <div class="row ftco-animate fadeInUp ftco-animated">
             <div class="col-md-12">
-                <div class="carousel-testimony owl-carousel owl-loaded owl-drag">
-
-
-
-
-
-                    <div class="owl-stage-outer">
-                        <div class="owl-stage"
-                            style="transition: all 0s ease 0s; width: 4180px; transform: translate3d(-760px, 0px, 0px);">
-                            <div class="owl-item cloned" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_3.jpg.pagespeed.ic.Cln-jaM1jK.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
+                <p-carousel [value]="testimonialSlide.slideMedias" [numVisible]="3" [numScroll]="3"
+                    [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions" [circular]="true"
+                    [showIndicators]="false" [showNavigators]="false">
+                    <ng-template let-media pTemplate="item">
+                        <div class="item">
+                            <div class="testimony-wrap py-4">
+                                <div class="text">
+                                    <span class="pi pi-thumbs-up"></span>
+                                    <p class="mb-4">{{media.summary}}</p>
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-img"
+                                            style="background-image:url({{media.backgroundImagePath}})">
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_1.jpg.pagespeed.ic.a2MnMHMs44.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item cloned active" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_2.jpg.pagespeed.ic.Xrdu_nPZRp.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item active center" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_1.jpg.pagespeed.ic.a2MnMHMs44.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item active" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_2.jpg.pagespeed.ic.Xrdu_nPZRp.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_3.jpg.pagespeed.ic.Cln-jaM1jK.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_1.jpg.pagespeed.ic.a2MnMHMs44.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_2.jpg.pagespeed.ic.Xrdu_nPZRp.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_1.jpg.pagespeed.ic.a2MnMHMs44.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_2.jpg.pagespeed.ic.Xrdu_nPZRp.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 350px; margin-right: 30px;">
-                                <div class="item">
-                                    <div class="testimony-wrap py-4">
-                                        <div class="text">
-                                            <span class="fa fa-quote-left"></span>
-                                            <p class="mb-4">Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind texts.</p>
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-img"
-                                                    style="background-image:url(images/xperson_3.jpg.pagespeed.ic.Cln-jaM1jK.webp)">
-                                                </div>
-                                                <div class="pl-3">
-                                                    <p class="name">Roger Scott</p>
-                                                    <span class="position">Marketing Manager</span>
-                                                </div>
-                                            </div>
+                                        <div class="pl-3">
+                                            <p class="name">{{media.title}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="owl-nav disabled"><button role="presentation" class="owl-prev"><span
-                                class="ion-ios-arrow-back"></span></button><button role="presentation"
-                            class="owl-next"><span class="ion-ios-arrow-forward"></span></button></div>
-                    <div class="owl-dots"><button class="owl-dot active"><span></span></button><button
-                            class="owl-dot"><span></span></button><button class="owl-dot"><span></span></button><button
-                            class="owl-dot"><span></span></button><button class="owl-dot"><span></span></button></div>
-                </div>
+                    </ng-template>
+                </p-carousel>
             </div>
         </div>
     </div>
 </section>
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
-                <span class="subheading">Pricing</span>
-                <h2>Price &amp; Plans</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 ftco-animate fadeInUp ftco-animated">
-                <div class="block-7">
-                    <div class="img" style="background-image:url(images/xwork-1.jpg.pagespeed.ic.DBS_b_oaNK.webp)">
-                    </div>
-                    <div class="p-4">
-                        <ul class="pricing-text mb-2">
-                            <li><span class="fa fa-check-circle mr-2"></span>Planning Solution</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>10 Construction Drawings</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>Selection Materials</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>Unlimited Revision</li>
-                        </ul>
-                    </div>
-                    <div class="d-lg-flex align-items-center w-100 bg-light py-2 px-4">
-                        <span class="price"><sup>$</sup> <span class="number">78</span> <sub>/mos</sub></span>
-                        <p class="w-100 mb-0">
-                            <a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                class="btn btn-primary d-block px-2 py-3">Get Started</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 ftco-animate fadeInUp ftco-animated">
-                <div class="block-7">
-                    <div class="img" style="background-image:url(images/xwork-2.jpg.pagespeed.ic.-sgKCJH7Dn.webp)">
-                    </div>
-                    <div class="p-4">
-                        <ul class="pricing-text mb-2">
-                            <li><span class="fa fa-check-circle mr-2"></span>Planning Solution</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>10 Construction Drawings</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>Selection Materials</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>Unlimited Revision</li>
-                        </ul>
-                    </div>
-                    <div class="d-lg-flex align-items-center w-100 bg-light py-2 px-4">
-                        <span class="price"><sup>$</sup> <span class="number">88</span> <sub>/mos</sub></span>
-                        <p class="w-100 mb-0">
-                            <a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                class="btn btn-primary d-block px-2 py-3">Get Started</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 ftco-animate fadeInUp ftco-animated">
-                <div class="block-7">
-                    <div class="img" style="background-image:url(images/xwork-3.jpg.pagespeed.ic.fnAXdUdar9.webp)">
-                    </div>
-                    <div class="p-4">
-                        <ul class="pricing-text mb-2">
-                            <li><span class="fa fa-check-circle mr-2"></span>Planning Solution</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>10 Construction Drawings</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>Selection Materials</li>
-                            <li><span class="fa fa-check-circle mr-2"></span>Unlimited Revision</li>
-                        </ul>
-                    </div>
-                    <div class="d-lg-flex align-items-center w-100 bg-light py-2 px-4">
-                        <span class="price"><sup>$</sup> <span class="number">98</span> <sub>/mos</sub></span>
-                        <p class="w-100 mb-0">
-                            <a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                class="btn btn-primary d-block px-2 py-3">Get Started</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- 
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-5">
@@ -743,4 +443,4 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->

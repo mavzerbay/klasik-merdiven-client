@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Subject, takeUntil } from 'rxjs';
-import { ILanguage, Language } from 'src/app/models/language';
-import { Translate } from 'src/app/models/translate';
+import { Language } from '../models/language';
 import { Translation } from '../models/translation';
 import { MavDataService } from './mav-data.service';
 
@@ -22,8 +21,21 @@ export class LocalizationService {
 
   private unsubscribe = new Subject();
 
-  get getPrimaryLanguage() {
-    return this.languageSource.getValue().find(x => x.isPrimary);
+  get getPrimaryLanguage(): Language {
+    this.language$.subscribe((val) => {
+      if (val != null && val.length > 0) {
+        if (localStorage.getItem('langId') != null) {
+          const langId = localStorage.getItem('langId');
+          return val.find(x => x.id == langId);
+        } else {
+          return val.find(x => x.isPrimary);
+        }
+      } else {
+        return this.languageSource.getValue().find(x => x.isPrimary);
+      }
+
+    });
+    return this.languageSource.getValue().find(x => x.isPrimary) ?? new Language;
   }
 
   get getLanguageList() {
@@ -35,11 +47,17 @@ export class LocalizationService {
   }
 
   getLanguages() {
-    return this.dataService.getDataList<Language>('/Language').pipe(
+    return this.dataService.getDataList<Language>('/Language/GetAllLanguage').pipe(
       takeUntil(this.unsubscribe),
       map((response) => {
         if (response && response.isSuccess) {
           this.languageSource.next(response.dataMulti);
+          const browserLang = navigator.language;
+          let selectedLangId = response.dataMulti.find(x => x.isPrimary)?.id;
+          if (response.dataMulti.some(x => x.culture.includes(browserLang))) {
+            selectedLangId = response.dataMulti.find(x => x.culture.includes(browserLang))?.id;
+          }
+          localStorage.setItem("langId", `${selectedLangId}`);
         }
         return response;
       }
