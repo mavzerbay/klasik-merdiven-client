@@ -10,12 +10,16 @@ import { HomeComponent } from './components/home/home.component';
 import { CarouselModule } from 'primeng/carousel';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ContactComponent } from './components/contact/contact.component';
+import { PageComponent } from './components/page/page.component';
+
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ContactComponent
+    ContactComponent,
+    PageComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +28,7 @@ import { ContactComponent } from './components/contact/contact.component';
     AppRoutingModule,
     SharedModule,
     CarouselModule,
+    GalleriaModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

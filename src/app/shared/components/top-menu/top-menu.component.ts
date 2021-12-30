@@ -1,5 +1,6 @@
 import { Component, HostListener, isDevMode, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { ClientMenu } from 'src/app/models/client-menu-response';
 import { IApiResponse } from '../../models/api-response';
 import { LocalizationService } from '../../services/localization.service';
 import { MavDataService } from '../../services/mav-data.service';
@@ -16,7 +17,7 @@ export class TopMenuComponent implements OnInit {
     private dataService: MavDataService,
   ) { }
 
-  menuList!: any[];
+  menuList!: ClientMenu[];
 
   private unsubscribe = new Subject()
 
@@ -25,7 +26,7 @@ export class TopMenuComponent implements OnInit {
   }
 
   getMenuList() {
-    this.dataService.getDataList<any>('/Menu/ClientMenus').pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
+    this.dataService.getDataList<any>('/Menu/ClientMenus/0').pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
       if (response && response.isSuccess) {
         this.menuList = response.dataMulti;
       }

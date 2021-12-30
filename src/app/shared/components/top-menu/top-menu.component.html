@@ -9,7 +9,15 @@
                         <ul class="navbar-nav ml-auto">
                                 <li *ngFor="let menu of menuList" routerLinkActive="active"
                                         [routerLinkActiveOptions]="{exact: true}" class="nav-item">
-                                        <a [routerLink]="menu.routerLink" [queryParams]="menu.routerQueryParameter"
+                                        <a *ngIf="!menu.pageId && menu.slug" [routerLink]="[menu.routerLink,menu.slug]"
+                                                [queryParams]="menu.routerQueryParameter"
+                                                class="nav-link">{{menu.name}}</a>
+                                        <a *ngIf="!menu.pageId && !menu.slug" [routerLink]="menu.routerLink"
+                                                [queryParams]="menu.routerQueryParameter"
+                                                class="nav-link">{{menu.name}}</a>
+                                        <a *ngIf="menu.pageId && menu.page && menu.page.slug"
+                                                [routerLink]="[menu.routerLink,menu.page.slug]"
+                                                [queryParams]="menu.routerQueryParameter"
                                                 class="nav-link">{{menu.name}}</a>
                                 </li>
                         </ul>

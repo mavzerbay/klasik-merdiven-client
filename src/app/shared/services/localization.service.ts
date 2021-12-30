@@ -53,11 +53,15 @@ export class LocalizationService {
         if (response && response.isSuccess) {
           this.languageSource.next(response.dataMulti);
           const browserLang = navigator.language;
-          let selectedLangId = response.dataMulti.find(x => x.isPrimary)?.id;
+          let selectedLang = response.dataMulti.find(x => x.isPrimary);
           if (response.dataMulti.some(x => x.culture.includes(browserLang))) {
-            selectedLangId = response.dataMulti.find(x => x.culture.includes(browserLang))?.id;
+            selectedLang = response.dataMulti.find(x => x.culture.includes(browserLang));
           }
-          localStorage.setItem("langId", `${selectedLangId}`);
+          if (localStorage.getItem('langId') == null)
+            localStorage.setItem("langId", `${selectedLang?.id}`);
+          if (localStorage.getItem('culture') == null)
+            localStorage.setItem("culture", `${selectedLang?.culture}`);
+
         }
         return response;
       }

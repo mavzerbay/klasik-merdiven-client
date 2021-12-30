@@ -2,7 +2,7 @@
     [showIndicators]="false" [showNavigators]="false">
     <ng-template let-media pTemplate="item">
         <section class="hero-wrap"
-            style="background-image: url(&quot;{{media.backgroundImagePath}}&quot;); background-position: 50% 0%;"
+            style="background-image: url(&quot;{{media.backgroundImagePath}}&quot;), linear-gradient(#fff, #fffff2); background-position: 50% 0%;"
             data-stellar-background-ratio="0.3">
             <div class="overlay"></div>
             <div class="container">
@@ -12,11 +12,10 @@
                             <h1 class="mb-4" *ngIf="media.title">{{media.title}}</h1>
                             <p *ngIf="media.summary" [style]="media.textStyle?media.textStyle:'font-size:18px'">
                                 {{media.summary}}</p>
-                            <div class="d-flex meta" *ngIf="media.buttonText">
+                            <div class="d-flex meta" *ngIf="media.buttonText && media.page && media.page.slug">
                                 <div class="">
                                     <p class="mb-0">
-                                        <a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                            class="btn btn-primary py-3 px-2 px-md-4"
+                                        <a [routerLink]="'p/'+media.page.slug" class="btn btn-primary py-3 px-2 px-md-4"
                                             [style]="media.buttonStyle">{{media.buttonText}}</a>
                                     </p>
                                 </div>
@@ -140,13 +139,13 @@
     </div>
 </section>
 <section class="ftco-counter img" id="section-counter"
-    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
+    *ngIf="generalSettings != null">
     <div class="container">
         <div class="row pt-md-5">
             <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
                     <div class="text text-border d-flex align-items-center justify-content-center ">
-                        <strong class="number">{{getGeneralSettingsTransByCurrentLangId?.yearsOfExperienced}}</strong>
+                        <strong class="number">{{generalSettings?.yearsOfExperienced}}</strong>
                         <span>{{translate('Home.YearsOfExperienced')}}</span>
                     </div>
                 </div>
@@ -154,7 +153,7 @@
             <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
                     <div class="text text-border d-flex align-items-center justify-content-center ">
-                        <strong class="number">{{getGeneralSettingsTransByCurrentLangId?.projectDone}}</strong>
+                        <strong class="number">{{generalSettings?.projectDone}}</strong>
                         <span>{{translate('Home.ProjectDone')}}</span>
                     </div>
                 </div>
@@ -162,7 +161,7 @@
             <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
                     <div class="text d-flex align-items-center justify-content-center ">
-                        <strong class="number">{{getGeneralSettingsTransByCurrentLangId?.happyCustomer}}</strong>
+                        <strong class="number">{{generalSettings?.happyCustomer}}</strong>
                         <span>{{translate('Home.HappyCustomer')}}</span>
                     </div>
                 </div>

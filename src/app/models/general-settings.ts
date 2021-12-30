@@ -17,6 +17,12 @@ export class GeneralSettings implements BaseModel {
     contactPhone!: string;
     contactWhatsApp!: string;
     googleMapUrl!: string;
+    linkedInURL!: string;
+    facebookURL!: string;
+    instagramURL!: string;
+    yearsOfExperienced!: number;
+    projectDone!: number;
+    happyCustomer!: number;
     testimonailSlideId!: string;
     testimonailSlide!: any;
     generalSettingsTrans!: GeneralSettingsTrans[];
@@ -41,9 +47,6 @@ export class GeneralSettingsTrans implements BaseModel {
     info4Icon!: string;
     info4Title!: string;
     info4Description!: string;
-    yearsOfExperienced!: number;
-    projectDone!: number;
-    happyCustomer!: number;
     homeOgTitle!: string;
     homeOgDescription!: string;
     homeOgImage!: string;

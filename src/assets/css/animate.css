@@ -4768,11 +4768,11 @@ h3,
   box-shadow: 0 10px 34px -20px rgba(0, 0, 0, 0.41);
 }
 .ftco-navbar-light .navbar-nav > .nav-item.active > a {
-  color: #96bb7c;
+  color: #fff;
 }
 @media (max-width: 991.98px) {
   .ftco-navbar-light .navbar-nav > .nav-item.active > a {
-    color: #96bb7c;
+    color: #fff;
   }
 }
 .ftco-navbar-light .navbar-toggler {
@@ -4875,15 +4875,15 @@ h3,
   right: 0;
   bottom: 0;
   content: "";
-  opacity: 0.1;
+  opacity: 0.3;
   background: #21243d;
   background: #000;
-  background: -moz-linear-gradient(45deg, black 0%, white 100%);
+  background: -moz-linear-gradient(180deg, black 0%, white 100%);
   background: -webkit-gradient(left bottom, right top, color-stop(0%, black), color-stop(100%, white));
-  background: -webkit-linear-gradient(45deg, black 0%, white 100%);
-  background: -o-linear-gradient(45deg, black 0%, white 100%);
-  background: -ms-linear-gradient(45deg, black 0%, white 100%);
-  background: linear-gradient(45deg, black 0%, white 100%);
+  background: -webkit-linear-gradient(180deg, black 0%, white 100%);
+  background: -o-linear-gradient(180deg, black 0%, white 100%);
+  background: -ms-linear-gradient(180deg, black 0%, white 100%);
+  background: linear-gradient(180deg, black 0%, white 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#ffffff', GradientType=1 );
   height: 850px;
 }
@@ -4893,7 +4893,7 @@ h3,
 }
 .hero-wrap.hero-wrap-2 .overlay {
   width: 100%;
-  opacity: 0.1;
+  opacity: 0.3;
   height: 600px;
 }
 .hero-wrap.hero-wrap-2 .slider-text {

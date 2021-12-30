@@ -15,15 +15,22 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit, OnChanges {
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   home = { label: this.translate('Common.Dashboard'), url: '/' };
   @Input() menuItems!: MenuItem[];
+  @Input() headerPath: string = 'assets/images/default-breadcrumb.png';
 
   constructor(
     private localizationService: LocalizationService,
     private cdRef: ChangeDetectorRef,
   ) { }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes['menuItems'] && changes['menuItems'].currentValue) {
       this.menuItems = changes['menuItems'].currentValue;
       this.home.label = this.translate('Common.Dashboard');
+      this.cdRef.detectChanges();
+    }
+
+    if (changes && changes['headerPath']) {
+      this.headerPath = changes['headerPath'].currentValue ?? 'assets/images/default-breadcrumb.png';
       this.cdRef.detectChanges();
     }
   }

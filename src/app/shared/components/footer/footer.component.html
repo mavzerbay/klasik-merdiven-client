@@ -7,58 +7,51 @@
                     <p *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
                         {{getGeneralSettingsTransByCurrentLangId.aboutUs}}</p>
                     <ul class="ftco-footer-social list-unstyled mt-5">
-                        <li class="ftco-animate fadeInUp ftco-animated"><a
-                                href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-twitter"></span></a></li>
-                        <li class="ftco-animate fadeInUp ftco-animated"><a
-                                href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-facebook"></span></a></li>
-                        <li class="ftco-animate fadeInUp ftco-animated"><a
-                                href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-instagram"></span></a></li>
+                        <li class="ftco-animate fadeInUp ftco-animated">
+                            <a [href]="generalSettings?.linkedInURL"><span class="pi pi-linkedin"></span></a>
+                        </li>
+                        <li class="ftco-animate fadeInUp ftco-animated">
+                            <a [href]="generalSettings?.facebookURL"><span class="pi pi-facebook"></span></a>
+                        </li>
+                        <li class="ftco-animate fadeInUp ftco-animated">
+                            <a [href]="generalSettings?.instagramURL"><span class="pi pi-instagram"></span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md">
+            <div class="col-md" *ngIf="leftMenuList && leftMenuList.length>0">
                 <div class="ftco-footer-widget mb-4 ml-md-4">
-                    <h2 class="ftco-heading-2">Community</h2>
+                    <h2 class="ftco-heading-2">{{leftMenuParent}}</h2>
                     <ul class="list-unstyled">
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Projects</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Team</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Reviews</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>FAQs</a></li>
+                        <li *ngFor="let menu of leftMenuList">
+                            <a [routerLink]="menu.routerLink" [queryParams]="menu.routerQueryParameter">
+                                <span class="pi pi-angle-right mr-2">
+                                </span>{{menu.name}}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md">
+            <div class="col-md" *ngIf="middleMenuList && middleMenuList.length>0">
                 <div class="ftco-footer-widget mb-4 ml-md-4">
-                    <h2 class="ftco-heading-2">About Us</h2>
+                    <h2 class="ftco-heading-2">{{middleMenuParent}}</h2>
                     <ul class="list-unstyled">
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Our Story</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Meet the team</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Careers</a></li>
+                        <li *ngFor="let menu of middleMenuList">
+                            <a [routerLink]="menu.routerLink" [queryParams]="menu.routerQueryParameter">
+                                <span class="pi pi-angle-right mr-2">
+                                </span>{{menu.name}}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md">
+            <div class="col-md" *ngIf="rightMenuList && rightMenuList.length>0">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Company</h2>
+                    <h2 class="ftco-heading-2">{{rightMenuParent}}</h2>
                     <ul class="list-unstyled">
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>About Us</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Press</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Contact</a></li>
-                        <li><a href="https://preview.colorlib.com/theme/archlab/index.html#"><span
-                                    class="fa fa-chevron-right mr-2"></span>Careers</a></li>
+                        <li *ngFor="let menu of rightMenuList">
+                            <a [routerLink]="menu.routerLink" [queryParams]="menu.routerQueryParameter">
+                                <span class="pi pi-angle-right mr-2">
+                                </span>{{menu.name}}</a>
+                        </li>
                     </ul>
                 </div>
             </div>

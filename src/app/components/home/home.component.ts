@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, isDevMode, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { GeneralSettings } from 'src/app/models/general-settings';
 import { Slide, SlideMedia } from 'src/app/models/slide';
@@ -30,6 +31,8 @@ export class HomeComponent implements OnInit {
     private dataService: MavDataService,
     private generalSettingsService: GeneralSettingsService,
     private localizationService: LocalizationService,
+    private meta: Meta,
+    private title: Title
   ) { }
   ngOnInit(): void {
     this.getHomeSlide();
@@ -43,6 +46,7 @@ export class HomeComponent implements OnInit {
     this.generalSettingsService.generalSettings$.subscribe((val) => {
       if (val != null) {
         this.generalSettings = val;
+        this.setTitleAndTags();
       }
     });
 
@@ -51,6 +55,18 @@ export class HomeComponent implements OnInit {
 
   translate(keyName: string) {
     return this.localizationService.translate(keyName);
+  }
+
+  setTitleAndTags() {
+    this.localizationService.translation$.subscribe((val) => {
+      if (val && val.length > 0) {
+        this.meta.addTags([
+          { name: 'description', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgDescription! },
+          { name: 'keywords', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgTitle! },
+        ]);
+        this.title.setTitle(this.translate('Common.Dashboard'));
+      }
+    })
   }
 
   get getGeneralSettingsTransByCurrentLangId() {

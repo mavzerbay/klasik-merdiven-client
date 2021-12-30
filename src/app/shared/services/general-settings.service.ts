@@ -23,6 +23,8 @@ export class GeneralSettingsService {
           console.log("::General Settings Loaded", response);
         if (response && response.isSuccess)
           this.generalSettingsSource.next(response.dataSingle);
+
+        return response;
       })
     );
   }
