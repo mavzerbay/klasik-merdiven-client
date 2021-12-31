@@ -1,9 +1,13 @@
+import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, isDevMode, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { Message, MessageService } from 'primeng/api';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { GeneralSettings } from 'src/app/models/general-settings';
 import { Slide, SlideMedia } from 'src/app/models/slide';
 import { IApiResponse } from 'src/app/shared/models/api-response';
+import { BaseDropdownResponse } from 'src/app/shared/models/base-dropdown-response';
 import { Language } from 'src/app/shared/models/language';
 import { GeneralSettingsService } from 'src/app/shared/services/general-settings.service';
 import { LocalizationService } from 'src/app/shared/services/localization.service';
@@ -27,10 +31,17 @@ export class HomeComponent implements OnInit {
 
   responsiveOptions: any;
 
+  formContact!: FormGroup;
+  supportTicketTypeList!: BaseDropdownResponse[];
+
+  private unsubscribe = new Subject();
+
   constructor(
+    private formBuilder: FormBuilder,
     private dataService: MavDataService,
     private generalSettingsService: GeneralSettingsService,
     private localizationService: LocalizationService,
+    private messageService: MessageService,
     private meta: Meta,
     private title: Title
   ) { }
@@ -51,6 +62,52 @@ export class HomeComponent implements OnInit {
     });
 
     this.getTestimonialSlide();
+    this.createContactForm();
+    this.getSupportTicketType();
+  }
+
+  createContactForm() {
+    this.formContact = this.formBuilder.group({
+      name: [{ value: null, disabled: false }, Validators.required],
+      surname: [{ value: null, disabled: false }, Validators.required],
+      supportType: [{ value: null, disabled: false }, Validators.required],
+      supportTypeId: [{ value: null, disabled: false }, Validators.required],
+      phoneNumber: [{ value: null, disabled: false }],
+      email: [{ value: null, disabled: false }, Validators.required],
+      content: [{ value: null, disabled: false }],
+    });
+
+    this.formContact.get('supportType')?.valueChanges.subscribe(val => {
+      if (val && val.id)
+        this.formContact.get('supportTypeId')?.setValue(val.id);
+      else
+        this.formContact.get('supportTypeId')?.setValue(null);
+    });
+
+  }
+  sendContactForm() {
+    if (this.formContact.valid) {
+      this.dataService.saveData('/SupportTicket', this.formContact.value).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
+        if (response && response.isSuccess) {
+          this.messageService.add({ key: 'home-toast', severity: 'success', summary: this.translate('Contact.TicketReceived') });
+          this.formContact.reset();
+        } else {
+          this.messageService.add({ key: 'home-toast', severity: 'error', summary: this.translate('Contact.TicketNotReceived') });
+        }
+      }, (error: any) => {
+        if (isDevMode())
+          console.log(error);
+      })
+    }
+  }
+
+  getSupportTicketType() {
+    const customParams = new HttpParams().append('GroupName', 'SupportType');
+    this.dataService.getDropdownDataList<BaseDropdownResponse>('/CustomVar/GetDropdownList', '', customParams).pipe(takeUntil(this.unsubscribe)).subscribe((response) => {
+      if (response && response.isSuccess) {
+        this.supportTicketTypeList = response.dataMulti;
+      }
+    })
   }
 
   translate(keyName: string) {
@@ -99,7 +156,7 @@ export class HomeComponent implements OnInit {
 
   getHomeSlide() {
     this.dataService.getData<Slide>(`/Slide/GetHomeSlide`,).subscribe((response: IApiResponse<Slide>) => {
-      if (response && response.isSuccess) {
+      if (response && response.isSuccess && response.dataSingle) {
         this.slideMediaList = response.dataSingle.slideMedias.sort((a, b) => a.displayOrder > b.displayOrder ? 1 : a.displayOrder < b.displayOrder ? -1 : 0);
       }
     }, error => {
@@ -111,7 +168,7 @@ export class HomeComponent implements OnInit {
 
   getTestimonialSlide() {
     this.dataService.getData<Slide>(`/Slide/GetTestimonialSlide`,).subscribe((response: IApiResponse<Slide>) => {
-      if (response && response.isSuccess) {
+      if (response && response.isSuccess && response.dataSingle) {
         this.testimonialSlide = response.dataSingle;
         this.testimonialSlide.slideMedias = this.testimonialSlide.slideMedias.sort((a, b) => a.displayOrder > b.displayOrder ? 1 : a.displayOrder < b.displayOrder ? -1 : 0)
       }

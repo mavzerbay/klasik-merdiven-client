@@ -71,13 +71,9 @@ export class PageComponent implements OnInit {
     this.dataService.getById<Page>(`/Page`, slug).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<Page>) => {
       if (response && response.isSuccess) {
         this.page = response.dataSingle;
-
-        if (this.page.pageType.keyName == 'BlogDetail') {
-          this.getRecentBlog();
-        }
-
         if (this.page.pageType.keyName == 'BlogDetail' || this.page.pageType.keyName == 'Detail') {
           this.getGalery(this.page.id);
+          this.getRecentBlog();
         }
         this.menuItems = [
           { label: this.page.name, url: 'p/' + slug }
@@ -124,7 +120,7 @@ export class PageComponent implements OnInit {
     let customParams = new HttpParams()
     customParams = customParams.append("PageSize", 3);
     customParams = customParams.append("Sort", "createdDateDesc");
-    customParams = customParams.append("PageTypeKeyName", "BlogDetail");
+    customParams = customParams.append("ParentPageId", this.page.parentPageId);
     this.dataService.getDataList<Page>(`/Page`, undefined, customParams).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
       if (response && response.isSuccess) {
         this.recentBlogs = response.dataMulti;

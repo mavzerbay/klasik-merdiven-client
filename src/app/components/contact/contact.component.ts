@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeResourceUrl, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs';
@@ -20,6 +20,8 @@ export class ContactComponent implements OnInit {
     private localizationService: LocalizationService,
     private router: Router,
     private sanitizer: DomSanitizer,
+    private meta: Meta,
+    private title: Title
   ) { }
 
   menuItems!: MenuItem[];
@@ -40,6 +42,7 @@ export class ContactComponent implements OnInit {
       if (val != null) {
         this.generalSettings = val;
         this.googleMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generalSettings.googleMapUrl);
+        this.setTitleAndTags();
       }
     });
 
@@ -54,5 +57,28 @@ export class ContactComponent implements OnInit {
 
   translate(keyName: string) {
     return this.localizationService.translate(keyName);
+  }
+
+  get getGeneralSettingsTransByCurrentLangId() {
+    if (this.primaryLanguage == null)
+      return null
+    else {
+      return this.generalSettings.generalSettingsTrans.find(x => x.languageId == this.primaryLanguage?.id);
+    }
+  }
+
+  setTitleAndTags() {
+    this.localizationService.translation$.subscribe((val) => {
+      if (val && val.length > 0) {
+        this.meta.addTags([
+          { name: 'description', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgDescription! },
+          { name: 'keywords', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgTitle! },
+          { property: 'og:title', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgTitle! },
+          { property: 'og:description', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgDescription! },
+          { property: 'og:image', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgImage! },
+        ]);
+        this.title.setTitle(this.translate('Contact.ControllerTitle'));
+      }
+    })
   }
 }

@@ -89,41 +89,49 @@
                     style="background-image:url(assets/images/about-us-2.png)">
                     <div class="request-quote py-5">
                         <div class="py-2">
-                            <span class="subheading">Be Part of our Business</span>
-                            <h3>Request A Quote</h3>
+                            <h3>{{translate('Home.ContactUs')}}</h3>
                         </div>
-                        <form action="https://preview.colorlib.com/theme/archlab/index.html#"
+                        <form [formGroup]="formContact" (ngSubmit)="sendContactForm()"
                             class="request-form ftco-animate fadeInUp ftco-animated">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="First Name">
+                                <input type="text" class="form-control" formControlName="name"
+                                    [placeholder]="translate('Contact.YourName')+'*'">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Last Name">
+                                <input type="text" class="form-control" formControlName="surname"
+                                    [placeholder]="translate('Contact.YourSurname')+'*'">
                             </div>
                             <div class="form-group">
                                 <div class="form-field">
                                     <div class="select-wrap">
                                         <div class="icon-arr"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">Select Your Services</option>
-                                            <option value="">Construction</option>
-                                            <option value="">Renovation</option>
-                                            <option value="">Interior Design</option>
-                                            <option value="">Exterior Design</option>
-                                            <option value="">Painting</option>
+                                        <select formControlName="supportType" class="form-control">
+                                            <option [ngValue]="null" disabled style="color:black">
+                                                {{translate('Contact.SelectSupportTicketType')+'*'}}
+                                            </option>
+                                            <option *ngFor="let type of supportTicketTypeList" [ngValue]="type"
+                                                style="color:black">
+                                                {{type.name}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Phone">
+                                <input type="text" class="form-control" formControlName="email"
+                                    [placeholder]="translate('Contact.YourEmail')+'*'">
                             </div>
                             <div class="form-group">
-                                <textarea name="" id="" cols="30" rows="2" class="form-control"
-                                    placeholder="Message"></textarea>
+                                <input type="text" class="form-control" formControlName="phoneNumber"
+                                    [placeholder]="translate('Contact.PhoneNumber')">
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Request A Quote" class="btn btn-primary py-3 px-4">
+                                <textarea name="" id="" cols="30" rows="2" formControlName="content"
+                                    class="form-control" [placeholder]="translate('Contact.Message')"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" [disabled]="formContact.invalid"
+                                    [value]="translate('Commond.Send')" class="btn btn-primary py-3 px-4">
                             </div>
                         </form>
                     </div>
@@ -138,8 +146,7 @@
         </div>
     </div>
 </section>
-<section class="ftco-counter img" id="section-counter"
-    *ngIf="generalSettings != null">
+<section class="ftco-counter img" id="section-counter" *ngIf="generalSettings != null">
     <div class="container">
         <div class="row pt-md-5">
             <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
@@ -443,3 +450,4 @@
         </div>
     </div>
 </section> -->
+<p-toast position="bottom-right" key="home-toast" [baseZIndex]="9999999"></p-toast>

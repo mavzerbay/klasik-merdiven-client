@@ -1,7 +1,7 @@
 import { BaseModel } from "./base-model";
 
 export interface IApiResponse<T extends BaseModel | boolean> {
-    error: any[];
+    errors: any[];
     isSuccess: boolean;
     statusCode: number;
     pageIndex: number;
