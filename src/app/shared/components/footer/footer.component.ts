@@ -34,9 +34,15 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.localizationService.language$.subscribe((val) => {
-      if (val != null && val.length > 0)
-        this.primaryLanguage = this.localizationService.getPrimaryLanguage;
-    })
+      if (val != null && val.length > 0) {
+        const langId = localStorage.getItem('langId');
+        if (langId != null && val.some(x => x.id == langId)) {
+          this.primaryLanguage = val.find(x => x.id == langId)!;
+        } else {
+          this.primaryLanguage = val.find(x => x.isPrimary)!;
+        }
+      }
+    });
 
     this.generalSettingsService.generalSettings$.subscribe((val) => {
       if (val != null) {

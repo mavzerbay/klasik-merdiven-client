@@ -1,4 +1,4 @@
-<p-carousel [value]="slideMediaList" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000"
+<p-carousel [value]="slideMediaList" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="10000"
     [showIndicators]="false" [showNavigators]="false">
     <ng-template let-media pTemplate="item">
         <section class="hero-wrap"
@@ -123,15 +123,15 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" formControlName="phoneNumber"
-                                    [placeholder]="translate('Contact.PhoneNumber')">
+                                    [placeholder]="translate('Contact.YourPhoneNumber')">
                             </div>
                             <div class="form-group">
                                 <textarea name="" id="" cols="30" rows="2" formControlName="content"
-                                    class="form-control" [placeholder]="translate('Contact.Message')"></textarea>
+                                    class="form-control" [placeholder]="translate('Contact.Message')+'*'"></textarea>
                             </div>
                             <div class="form-group">
                                 <input type="submit" [disabled]="formContact.invalid"
-                                    [value]="translate('Commond.Send')" class="btn btn-primary py-3 px-4">
+                                    [value]="translate('Contact.SendMessage')" class="btn btn-primary py-3 px-4">
                             </div>
                         </form>
                     </div>
@@ -176,148 +176,38 @@
         </div>
     </div>
 </section>
-<!-- <section class="ftco-section ftco-portfolio">
+<section class="ftco-section ftco-portfolio" *ngIf="latestProjectList && latestProjectList.length>0">
     <div class="row justify-content-center no-gutters">
         <div class="col-md-12 heading-section text-center ftco-animate mb-5 fadeInUp ftco-animated">
-            <span class="subheading">Projects</span>
-            <h2 class="mb-2">Our Unique Latest Projects</h2>
+            <span class="subheading">{{latestProjectList[0].parentPage.name}}</span>
+            <h2 class="mb-2">{{translate('Home.LatestProjects') | stringFormat: latestProjectList[0].parentPage.name}}
+            </h2>
         </div>
     </div>
     <div class="container">
         <div class="row no-gutters">
-            <div class="col-md-12 portfolio-wrap">
+            <div class="col-md-12 portfolio-wrap" *ngFor="let latestProject of latestProjectList;let i = index">
                 <div class="row no-gutters align-items-center">
-                    <div class="col-md-5 img js-fullheight"
-                        style="background-image: url(&quot;images/xwork-1.jpg.pagespeed.ic.DBS_b_oaNK.webp&quot;); height: 880px;">
+                    <div class="col-md-5 img js-fullheight" [class.order-md-last]="i%2==0"
+                        style="background-image: url(&quot;{{latestProject.backgroundPath}}&quot;); height: 625px;">
                     </div>
                     <div class="col-md-7">
-                        <div class="text pt-5 pl-0 pl-lg-5 pl-md-4 ftco-animate fadeInUp ftco-animated">
+                        <div class="text pt-5 ftco-animate fadeInUp ftco-animated" [class.pl-0.pl-lg-5.pl-md-4]="i%2!=0"
+                            [class.pr-md-5]="i%2==0">
                             <div class="px-4 px-lg-4">
                                 <div class="desc">
                                     <div class="top">
-                                        <span class="subheading">Exterior {{"{12/07/2020}"}}"</span>
+                                        <span class="subheading">{{latestProject.createdBy.name}}
+                                            {{latestProject.createdDate |
+                                            date:'M/d/yy'}}</span>
                                         <h2 class="mb-4"><a
-                                                href="https://preview.colorlib.com/theme/archlab/work.html">Geometric
-                                                Building</a></h2>
+                                                [routerLink]="['/p',latestProject.slug]">{{latestProject.name}}</a>
+                                        </h2>
                                     </div>
                                     <div class="absolute">
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                                class="custom-btn">View Portfolio</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 portfolio-wrap">
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-5 order-md-last img js-fullheight"
-                        style="background-image: url(&quot;images/xwork-2.jpg.pagespeed.ic.-sgKCJH7Dn.webp&quot;); height: 880px;">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="text pt-5 pr-md-5 ftco-animate fadeInUp ftco-animated">
-                            <div class="px-4 px-lg-4">
-                                <div class="desc text-md-right">
-                                    <div class="top">
-                                        <span class="subheading">Furniture {{"{12/07/2020}"}}</span>
-                                        <h2 class="mb-4"><a
-                                                href="https://preview.colorlib.com/theme/archlab/work.html">Twin
-                                                Office</a></h2>
-                                    </div>
-                                    <div class="absolute">
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                                class="custom-btn">View Portfolio</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 portfolio-wrap">
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-5 img js-fullheight"
-                        style="background-image: url(&quot;images/xwork-3.jpg.pagespeed.ic.fnAXdUdar9.webp&quot;); height: 880px;">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="text pt-5 pl-md-5 pl-md-4 ftco-animate fadeInUp ftco-animated">
-                            <div class="px-4 px-lg-4">
-                                <div class="desc">
-                                    <div class="top">
-                                        <span class="subheading">Building {{"{12/07/2020}"}}</span>
-                                        <h2 class="mb-4"><a
-                                                href="https://preview.colorlib.com/theme/archlab/work.html">Cultural
-                                                Complex Centre</a></h2>
-                                    </div>
-                                    <div class="absolute">
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                                class="custom-btn">View Portfolio</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 portfolio-wrap">
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-5 order-md-last img js-fullheight"
-                        style="background-image: url(&quot;images/xwork-4.jpg.pagespeed.ic.Wiuf9yOQGH.webp&quot;); height: 880px;">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="text pt-5 pr-md-5 ftco-animate fadeInUp ftco-animated">
-                            <div class="px-4 px-lg-4">
-                                <div class="desc text-md-right">
-                                    <div class="top">
-                                        <span class="subheading">Furniture {{"{12/07/2020}"}}</span>
-                                        <h2 class="mb-4"><a
-                                                href="https://preview.colorlib.com/theme/archlab/work.html">Twin
-                                                Office</a></h2>
-                                    </div>
-                                    <div class="absolute">
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                                class="custom-btn">View Portfolio</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 portfolio-wrap">
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-5 img js-fullheight"
-                        style="background-image: url(&quot;images/xwork-5.jpg.pagespeed.ic.0L64lj9_NR.webp&quot;); height: 880px;">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="text pt-5 pl-md-5 pl-md-4 ftco-animate fadeInUp ftco-animated">
-                            <div class="px-4 px-lg-4">
-                                <div class="desc">
-                                    <div class="top">
-                                        <span class="subheading">Building {{"{12/07/2020}"}}</span>
-                                        <h2 class="mb-4"><a
-                                                href="https://preview.colorlib.com/theme/archlab/work.html">Cultural
-                                                Complex Centre</a></h2>
-                                    </div>
-                                    <div class="absolute">
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                                class="custom-btn">View Portfolio</a></p>
+                                        <p>{{latestProject.summary}}</p>
+                                        <p><a [routerLink]="['/p',latestProject.slug]"
+                                                class="custom-btn">{{translate('Home.ViewDetail')}}</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -327,7 +217,7 @@
             </div>
         </div>
     </div>
-</section> -->
+</section>
 
 <section class="ftco-section testimony-section bg-light"
     *ngIf="testimonialSlide && testimonialSlide.slideMedias!=null && testimonialSlide.slideMedias.length>0">
@@ -365,89 +255,36 @@
         </div>
     </div>
 </section>
-<!-- 
-<section class="ftco-section">
+<section class="ftco-section" *ngIf="latestBlogList && latestBlogList.length>0">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
-                <span class="subheading">Blog</span>
-                <h2>Recent Blog</h2>
+                <span class="subheading">{{translate('Home.Blog')}}</span>
+                <h2>{{'Page.RecentBlogs'}}</h2>
             </div>
         </div>
         <div class="row d-flex">
-            <div class="col-md-3 d-flex ftco-animate fadeInUp ftco-animated">
+            <div class="col-md-{{12/latestBlogList.length}} d-flex ftco-animate fadeInUp ftco-animated"
+                *ngFor="let blog of latestBlogList">
                 <div class="blog-entry justify-content-end">
                     <div class="text">
-                        <a href="https://preview.colorlib.com/theme/archlab/blog-single.html" class="block-20 img"
-                            style="background-image:url(images/ximage_1.jpg.pagespeed.ic.ZcKM2wet7i.webp)">
+                        <a [routerLink]="['/p',blog.slug]" class="block-20 img"
+                            style="background-image:url({{blog.backgroundPath}})">
                         </a>
                         <div class="meta mb-3">
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">June 01, 2020</a>
+                            <div><a [routerLink]="['/p',blog.slug]">{{blog.createdDate |
+                                    date:'M/d/yy'}}</a>
                             </div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">Admin</a></div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                    class="meta-chat"><span class="fa fa-comment"></span> 3</a></div>
+                            <div><a [routerLink]="['/p',blog.slug]">{{blog.createdBy.name}}</a></div>
+                            <!-- <div><a [routerLink]="['/p',blog.slug]" class="meta-chat"><span
+                                        class="pi pi-comment"></span> 3</a></div> -->
                         </div>
-                        <h3 class="heading"><a href="https://preview.colorlib.com/theme/archlab/index.html#">Make Peace
-                                With Your Broken Pieces</a></h3>
+                        <h3 class="heading"><a [routerLink]="['/p',blog.slug]">{{blog.name}}</a></h3>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 d-flex ftco-animate fadeInUp ftco-animated">
-                <div class="blog-entry justify-content-end">
-                    <div class="text">
-                        <a href="https://preview.colorlib.com/theme/archlab/blog-single.html" class="block-20 img"
-                            style="background-image:url(images/ximage_2.jpg.pagespeed.ic.YfJbVGAAKd.webp)">
-                        </a>
-                        <div class="meta mb-3">
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">June 01, 2020</a>
-                            </div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">Admin</a></div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                    class="meta-chat"><span class="fa fa-comment"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading"><a href="https://preview.colorlib.com/theme/archlab/index.html#">Make Peace
-                                With Your Broken Pieces</a></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 d-flex ftco-animate fadeInUp ftco-animated">
-                <div class="blog-entry justify-content-end">
-                    <div class="text">
-                        <a href="https://preview.colorlib.com/theme/archlab/blog-single.html" class="block-20 img"
-                            style="background-image:url(images/ximage_3.jpg.pagespeed.ic._mpzTRkQu5.webp)">
-                        </a>
-                        <div class="meta mb-3">
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">June 01, 2020</a>
-                            </div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">Admin</a></div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                    class="meta-chat"><span class="fa fa-comment"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading"><a href="https://preview.colorlib.com/theme/archlab/index.html#">Make Peace
-                                With Your Broken Pieces</a></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 d-flex ftco-animate fadeInUp ftco-animated">
-                <div class="blog-entry justify-content-end">
-                    <div class="text">
-                        <a href="https://preview.colorlib.com/theme/archlab/blog-single.html" class="block-20 img"
-                            style="background-image:url(images/ximage_4.jpg.pagespeed.ic.gxz0qxEVQV.webp)">
-                        </a>
-                        <div class="meta mb-3">
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">June 01, 2020</a>
-                            </div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#">Admin</a></div>
-                            <div><a href="https://preview.colorlib.com/theme/archlab/index.html#"
-                                    class="meta-chat"><span class="fa fa-comment"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading"><a href="https://preview.colorlib.com/theme/archlab/index.html#">Make Peace
-                                With Your Broken Pieces</a></h3>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
-</section> -->
+</section>
 <p-toast position="bottom-right" key="home-toast" [baseZIndex]="9999999"></p-toast>

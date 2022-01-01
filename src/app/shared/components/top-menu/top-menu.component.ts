@@ -1,7 +1,8 @@
 import { Component, HostListener, isDevMode, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ClientMenu } from 'src/app/models/client-menu-response';
 import { IApiResponse } from '../../models/api-response';
+import { Language } from '../../models/language';
 import { LocalizationService } from '../../services/localization.service';
 import { MavDataService } from '../../services/mav-data.service';
 
@@ -21,8 +22,28 @@ export class TopMenuComponent implements OnInit {
 
   private unsubscribe = new Subject()
 
+  languages!: Language[];
+  languages$!: Observable<Language[]>;
+
+  selectedLanguage!: Language;
+
   ngOnInit(): void {
+    this.languages$ = this.localizationService.language$;
+    this.localizationService.language$.subscribe((val) => {
+      if (val != null && val.length > 0) {
+        const langId = localStorage.getItem('langId');
+        if (langId != null && val.some(x => x.id == langId)) {
+          this.selectedLanguage = val.find(x => x.id == langId)!;
+        } else {
+          this.selectedLanguage = val.find(x => x.isPrimary)!;
+        }
+      }
+    });
     this.getMenuList();
+  }
+
+  translate(keyName: string) {
+    return this.localizationService.translate(keyName);
   }
 
   getMenuList() {
@@ -49,6 +70,27 @@ export class TopMenuComponent implements OnInit {
         navbar?.classList.remove('scrolled');
       if (navbar?.classList.contains('awake'))
         navbar?.classList.remove('awake');
+    }
+  }
+
+  menuClick() {
+    const menu = document.getElementById('ftco-nav');
+    if (menu?.classList.contains('show')) {
+      menu.classList.remove('show');
+    } else {
+      menu?.classList.add('show')
+    }
+  }
+
+  onLangChange(event: any) {
+    if (event.value && event.value.id) {
+      this.localizationService.changePrimaryLanguage(event.value.id);
+    } else {
+      this.localizationService.language$.subscribe((val) => {
+        if (val != null && val.length > 0) {
+          this.selectedLanguage = val.find(x => x.isPrimary)!;
+        }
+      });
     }
   }
 }

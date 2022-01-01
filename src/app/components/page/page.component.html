@@ -37,7 +37,7 @@
                                     <div class="px-4 px-lg-4">
                                         <div class="desc">
                                             <div class="top">
-                                                <span class="subheading">{{child.createdBy.nameSurname}}
+                                                <span class="subheading">{{child.createdBy.name}}
                                                     {{child.createdDate |
                                                     date:'M/d/yy'}}</span>
                                                 <h2 class="mb-4"><a [routerLink]="['/p',child.slug]">{{child.name}}</a>
@@ -84,8 +84,8 @@
                                 </a>
                                 <div class="meta mb-3">
                                     <div><a href="#">{{child.createdDate | date:'M/d/yy'}}</a></div>
-                                    <div><a href="#">{{child.createdBy.nameSurname}}</a></div>
-                                    <div><a href="#" class="meta-chat"><span class="pi pi-comment"></span> 3</a></div>
+                                    <div><a href="#">{{child.createdBy.name}}</a></div>
+                                    <!-- <div><a href="#" class="meta-chat"><span class="pi pi-comment"></span> 3</a></div> -->
                                 </div>
                                 <h3 class="heading"><a href="#">{{child.name}}</a></h3>
                             </div>
@@ -154,7 +154,7 @@
                                         </div>
                                         <div><a href="#">
                                                 <span class="pi pi-user-edit"></span>
-                                                {{recent.createdBy.nameSurname}}
+                                                {{recent.createdBy.name}}
                                             </a>
                                         </div>
                                         <!-- <div>
@@ -222,7 +222,7 @@
                                         </div>
                                         <div><a href="#">
                                                 <span class="pi pi-user-edit"></span>
-                                                {{recent.createdBy.nameSurname}}
+                                                {{recent.createdBy.name}}
                                             </a>
                                         </div>
                                         <!-- <div>

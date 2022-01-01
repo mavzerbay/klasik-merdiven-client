@@ -68,6 +68,19 @@ export class LocalizationService {
       ));
   }
 
+  changePrimaryLanguage(langId: string) {
+    this.language$.subscribe((val) => {
+      if (val != null && val.length > 0) {
+        if (val.some(x => x.id == langId)) {
+          var language = val.find(x => x.id == langId);
+          localStorage.setItem('langId', language?.id!);
+          localStorage.setItem('culture', language?.culture!);
+        }
+        location.reload();
+      }
+    });
+  }
+
   getTranslations() {
     return this.dataService.getDataList<Translation>('/Translate/GetTranslations').pipe(
       takeUntil(this.unsubscribe),

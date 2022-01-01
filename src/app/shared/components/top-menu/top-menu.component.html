@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container-fluid">
                 <a class="navbar-brand" href="#">Klasik Merdiven</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="oi oi-menu"></span> Menu
+                <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="menuClick()"
+                        data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="oi oi-menu"></span> {{translate('Common.Menu')}}
                 </button>
                 <div class="collapse navbar-collapse" id="ftco-nav">
                         <ul class="navbar-nav ml-auto">
@@ -21,6 +22,29 @@
                                                 class="nav-link">{{menu.name}}</a>
                                 </li>
                         </ul>
+                </div>
+                <div class="navbar-collapse lang-drop"
+                        *ngIf="(languages$|async) && (languages$|async)!=null && selectedLanguage!=null">
+                        <div class="row">
+                                <p-dropdown [options]="(languages$|async)!" [(ngModel)]="selectedLanguage"
+                                        optionLabel="name" (onChange)="onLangChange($event)"
+                                        placeholder="Select a Country">
+                                        <ng-template pTemplate="selectedItem">
+                                                <div class="country-item country-item-value" *ngIf="selectedLanguage">
+                                                        <div class="d-flex align-items-center">
+                                                                <img src="assets/images/flag_placeholder.png"
+                                                                        [class]="'flag flag-' + selectedLanguage.flagIcon.toLowerCase()" />&nbsp;{{selectedLanguage.name}}
+                                                        </div>
+                                                </div>
+                                        </ng-template>
+                                        <ng-template let-language pTemplate="item">
+                                                <div class="d-flex align-items-center">
+                                                        <img src="assets/images/flag_placeholder.png"
+                                                                [class]="'flag flag-' + language.flagIcon.toLowerCase()" />&nbsp;{{language.name}}
+                                                </div>
+                                        </ng-template>
+                                </p-dropdown>
+                        </div>
                 </div>
         </div>
 </nav>

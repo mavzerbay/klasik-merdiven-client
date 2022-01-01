@@ -73,7 +73,10 @@ export class PageComponent implements OnInit {
         this.page = response.dataSingle;
         if (this.page.pageType.keyName == 'BlogDetail' || this.page.pageType.keyName == 'Detail') {
           this.getGalery(this.page.id);
-          this.getRecentBlog();
+          if (this.page.pageType.keyName == 'BlogDetail')
+            this.getRecentBlogs();
+          else
+            this.getRecentPages();
         }
         this.menuItems = [
           { label: this.page.name, url: 'p/' + slug }
@@ -116,12 +119,19 @@ export class PageComponent implements OnInit {
     this.displayCustom = true;
   }
 
-  getRecentBlog() {
-    let customParams = new HttpParams()
-    customParams = customParams.append("PageSize", 3);
-    customParams = customParams.append("Sort", "createdDateDesc");
-    customParams = customParams.append("ParentPageId", this.page.parentPageId);
-    this.dataService.getDataList<Page>(`/Page`, undefined, customParams).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
+  getRecentPages() {
+    this.dataService.getDataList<Page>(`/Page/GetLatest/${this.page.parentPageId}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
+      if (response && response.isSuccess) {
+        this.recentBlogs = response.dataMulti;
+      }
+    }, error => {
+      if (isDevMode())
+        console.log(error);
+    })
+  }
+
+  getRecentBlogs() {
+    this.dataService.getDataList<Page>(`/Page/GetLatestBlogs}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
       if (response && response.isSuccess) {
         this.recentBlogs = response.dataMulti;
       }

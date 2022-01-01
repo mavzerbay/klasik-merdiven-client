@@ -25,6 +25,8 @@ export class GeneralSettings implements BaseModel {
     happyCustomer!: number;
     testimonailSlideId!: string;
     testimonailSlide!: any;
+    latestProjectPageId!: string;
+    latestProjectPage!: any;
     generalSettingsTrans!: GeneralSettingsTrans[];
 }
 

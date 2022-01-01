@@ -1,0 +1,22 @@
+:host ::ng-deep {
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: #96bb7c !important;
+    }
+    .p-dropdown:not(.p-disabled).p-focus {
+        box-shadow: 0 0 0 1px #a4ee70;
+        border-color: #96bb7c;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .lang-drop {
+        max-width: 150px;
+        padding-left: 1rem;
+    }
+}
+@media screen and (max-width: 992px) {
+    .lang-drop .row {
+        justify-content: end;
+        padding-right: 0.5rem;
+    }
+}

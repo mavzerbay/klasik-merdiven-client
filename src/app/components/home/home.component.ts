@@ -5,6 +5,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Message, MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { GeneralSettings } from 'src/app/models/general-settings';
+import { Page } from 'src/app/models/page';
 import { Slide, SlideMedia } from 'src/app/models/slide';
 import { IApiResponse } from 'src/app/shared/models/api-response';
 import { BaseDropdownResponse } from 'src/app/shared/models/base-dropdown-response';
@@ -31,6 +32,10 @@ export class HomeComponent implements OnInit {
 
   responsiveOptions: any;
 
+  latestProjectList!: Page[];
+
+  latestBlogList!: Page[];
+
   formContact!: FormGroup;
   supportTicketTypeList!: BaseDropdownResponse[];
 
@@ -45,19 +50,27 @@ export class HomeComponent implements OnInit {
     private meta: Meta,
     private title: Title
   ) { }
+
   ngOnInit(): void {
     this.getHomeSlide();
     this.setTestimonialResponsiveOptions();
 
     this.localizationService.language$.subscribe((val) => {
-      if (val != null && val.length > 0)
-        this.primaryLanguage = this.localizationService.getPrimaryLanguage;
-    })
+      if (val != null && val.length > 0) {
+        const langId = localStorage.getItem('langId');
+        if (langId != null && val.some(x => x.id == langId)) {
+          this.primaryLanguage = val.find(x => x.id == langId)!;
+        } else {
+          this.primaryLanguage = val.find(x => x.isPrimary)!;
+        }
+      }
+    });
 
     this.generalSettingsService.generalSettings$.subscribe((val) => {
       if (val != null) {
         this.generalSettings = val;
         this.setTitleAndTags();
+        this.getLatestProjects();
       }
     });
 
@@ -74,7 +87,7 @@ export class HomeComponent implements OnInit {
       supportTypeId: [{ value: null, disabled: false }, Validators.required],
       phoneNumber: [{ value: null, disabled: false }],
       email: [{ value: null, disabled: false }, Validators.required],
-      content: [{ value: null, disabled: false }],
+      content: [{ value: null, disabled: false }, Validators.required],
     });
 
     this.formContact.get('supportType')?.valueChanges.subscribe(val => {
@@ -88,7 +101,7 @@ export class HomeComponent implements OnInit {
   sendContactForm() {
     if (this.formContact.valid) {
       this.dataService.saveData('/SupportTicket', this.formContact.value).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
-        if (response && response.isSuccess) {
+        if (response && response.isSuccess && response.dataSingle.mailSended) {
           this.messageService.add({ key: 'home-toast', severity: 'success', summary: this.translate('Contact.TicketReceived') });
           this.formContact.reset();
         } else {
@@ -130,7 +143,7 @@ export class HomeComponent implements OnInit {
     if (this.primaryLanguage == null)
       return null
     else {
-      return this.generalSettings.generalSettingsTrans.find(x => x.languageId == this.primaryLanguage?.id);
+      return this.generalSettings.generalSettingsTrans.find(x => x.languageId == this.primaryLanguage?.id && x.aboutUs != null);
     }
   }
 
@@ -171,6 +184,28 @@ export class HomeComponent implements OnInit {
       if (response && response.isSuccess && response.dataSingle) {
         this.testimonialSlide = response.dataSingle;
         this.testimonialSlide.slideMedias = this.testimonialSlide.slideMedias.sort((a, b) => a.displayOrder > b.displayOrder ? 1 : a.displayOrder < b.displayOrder ? -1 : 0)
+      }
+    }, error => {
+      if (isDevMode())
+        console.log(error);
+    })
+  }
+
+  getLatestProjects() {
+    this.dataService.getDataList<Page>(`/Page/GetLatest/${this.generalSettings.latestProjectPageId}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
+      if (response && response.isSuccess) {
+        this.latestProjectList = response.dataMulti.filter(x => x.slug);
+      }
+    }, error => {
+      if (isDevMode())
+        console.log(error);
+    })
+  }
+
+  getRecentBlogs() {
+    this.dataService.getDataList<Page>(`/Page/GetLatestBlogs}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
+      if (response && response.isSuccess) {
+        this.latestBlogList = response.dataMulti;
       }
     }, error => {
       if (isDevMode())
