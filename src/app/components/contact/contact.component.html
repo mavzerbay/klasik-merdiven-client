@@ -1,8 +1,8 @@
 <app-breadcrumb [menuItems]="menuItems"></app-breadcrumb>
 <section class="ftco-section contact-section">
     <div class="container">
-        <div class="row block-9 justify-content-center mb-5">
-            <div class="col-md-8 mb-md-5">
+        <div class="grid block-9 justify-content-center mb-5">
+            <div class="md:col-8 mb-md-5">
                 <form [formGroup]="formContact" (ngSubmit)="sendContactForm()" class="bg-light p-5 contact-form">
                     <div class="form-group">
                         <input type="text" class="form-control" formControlName="name"
@@ -51,16 +51,16 @@
                 <h2 class="text-center mt-5">{{translate('Contact.Summary')}}</h2>
             </div>
         </div>
-        <div class="row d-flex mb-5 contact-info justify-content-center" *ngIf="generalSettings">
-            <div class="col-md-8">
-                <div class="row mb-5">
-                    <div class="col-md-4 text-center py-4">
+        <div class="grid d-flex mb-5 contact-info justify-content-center" *ngIf="generalSettings">
+            <div class="md:col-8">
+                <div class="grid mb-5">
+                    <div class="md:col-4 text-center py-4">
                         <div class="icon">
                             <span class="pi pi-map"></span>
                         </div>
                         <p><span>{{translate('Contact.Address')}}:</span> {{generalSettings.contactAddress}}</p>
                     </div>
-                    <div class="col-md-4 text-center border-height py-4">
+                    <div class="md:col-4 text-center border-height py-4">
                         <div class="icon">
                             <span class="pi pi-phone"></span>
                         </div>
@@ -68,7 +68,7 @@
                                 {{generalSettings.contactPhone}}</a>
                         </p>
                     </div>
-                    <div class="col-md-4 text-center py-4">
+                    <div class="md:col-4 text-center py-4">
                         <div class="icon">
                             <span class="pi pi-paper-plane"></span>
                         </div>
@@ -78,8 +78,8 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center" *ngIf="generalSettings && generalSettings.googleMapUrl && googleMapUrl">
-            <div class="col-md-8">
+        <div class="grid justify-content-center" *ngIf="generalSettings && generalSettings.googleMapUrl && googleMapUrl">
+            <div class="md:col-8">
                 <div id="map" class="bg-white" style="position: relative; overflow: hidden;">
                     <iframe [src]="googleMapUrl" style="border:0;width: 100%;height: 400px;" allowfullscreen=""
                         loading="lazy"></iframe>

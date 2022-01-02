@@ -7,6 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Page } from 'src/app/models/page';
 import { Slide, SlideMedia } from 'src/app/models/slide';
 import { IApiResponse } from 'src/app/shared/models/api-response';
+import { BusyService } from 'src/app/shared/services/busy.service';
 import { LocalizationService } from 'src/app/shared/services/localization.service';
 import { MavDataService } from 'src/app/shared/services/mav-data.service';
 
@@ -22,7 +23,8 @@ export class PageComponent implements OnInit {
     private route: ActivatedRoute,
     private localizationService: LocalizationService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    private busyService:BusyService,
   ) { }
 
   page!: Page;
@@ -56,6 +58,7 @@ export class PageComponent implements OnInit {
   private unsubscribe = new Subject();
 
   ngOnInit(): void {
+    this.busyService.setBusy();
     this.route.params.subscribe(params => {
       if (params['slug'])
         this.getPage(params['slug']);
@@ -85,6 +88,7 @@ export class PageComponent implements OnInit {
           this.menuItems.splice(0, 0, { label: this.page.parentPage.name, url: 'p/' + this.page.parentPage.slug });
         }
         this.setTitleAndTags();
+        this.busyService.setIdle();
       }
     }, error => {
       if (isDevMode())

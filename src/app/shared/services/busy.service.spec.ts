@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MavAuthService } from './mav-auth.service';
+import { BusyService } from './busy.service';
 
-describe('MavAuthService', () => {
-  let service: MavAuthService;
+describe('BusyService', () => {
+  let service: BusyService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MavAuthService);
+    service = TestBed.inject(BusyService);
   });
 
   it('should be created', () => {

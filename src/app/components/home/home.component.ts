@@ -10,6 +10,7 @@ import { Slide, SlideMedia } from 'src/app/models/slide';
 import { IApiResponse } from 'src/app/shared/models/api-response';
 import { BaseDropdownResponse } from 'src/app/shared/models/base-dropdown-response';
 import { Language } from 'src/app/shared/models/language';
+import { BusyService } from 'src/app/shared/services/busy.service';
 import { GeneralSettingsService } from 'src/app/shared/services/general-settings.service';
 import { LocalizationService } from 'src/app/shared/services/localization.service';
 import { MavDataService } from 'src/app/shared/services/mav-data.service';
@@ -48,10 +49,12 @@ export class HomeComponent implements OnInit {
     private localizationService: LocalizationService,
     private messageService: MessageService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    private busyService: BusyService,
   ) { }
 
   ngOnInit(): void {
+    this.busyService.setBusy();
     this.getHomeSlide();
     this.setTestimonialResponsiveOptions();
 
@@ -71,6 +74,7 @@ export class HomeComponent implements OnInit {
         this.generalSettings = val;
         this.setTitleAndTags();
         this.getLatestProjects();
+        this.busyService.setIdle();
       }
     });
 
@@ -128,15 +132,33 @@ export class HomeComponent implements OnInit {
   }
 
   setTitleAndTags() {
+    this.meta.addTags([
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:locale', content: localStorage.getItem('culture')! },
+      { property: 'og:site_name', content: 'Klasik Merdiven' },
+    ]);
     this.localizationService.translation$.subscribe((val) => {
       if (val && val.length > 0) {
-        this.meta.addTags([
-          { name: 'description', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgDescription! },
-          { name: 'keywords', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgTitle! },
-        ]);
+        if (this.getGeneralSettingsTransByCurrentLangId?.homeOgDescription)
+          this.meta.addTag({ name: 'description', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgDescription! });
+
+
+        if (this.getGeneralSettingsTransByCurrentLangId?.homeOgKeywords) {
+          this.meta.addTag({ name: 'keywords', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgKeywords! });
+          this.meta.addTag({ property: 'og:keywords', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgKeywords! });
+        }
+
+        if (this.getGeneralSettingsTransByCurrentLangId?.homeOgTitle)
+          this.meta.addTag({ property: 'og:title', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgTitle! },);
+
+        this.meta.addTag({ property: 'og:type', content: 'website' });
+
+        if (this.getGeneralSettingsTransByCurrentLangId?.homeOgImage)
+          this.meta.addTag({ property: 'og:image', content: this.getGeneralSettingsTransByCurrentLangId?.homeOgImage! });
+
         this.title.setTitle(this.translate('Common.Dashboard'));
       }
-    })
+    });
   }
 
   get getGeneralSettingsTransByCurrentLangId() {

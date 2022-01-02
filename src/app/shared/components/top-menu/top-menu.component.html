@@ -1,22 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container-fluid">
                 <a class="navbar-brand" href="#">Klasik Merdiven</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="menuClick()"
-                        data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" (click)="menuClick()"
+                        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="oi oi-menu"></span> {{translate('Common.Menu')}}
                 </button>
                 <div class="collapse navbar-collapse" id="ftco-nav">
                         <ul class="navbar-nav ml-auto">
                                 <li *ngFor="let menu of menuList" routerLinkActive="active"
                                         [routerLinkActiveOptions]="{exact: true}" class="nav-item">
-                                        <a *ngIf="!menu.pageId && menu.slug" [routerLink]="[menu.routerLink,menu.slug]"
+                                        <a *ngIf="!menu.pageId && menu.slug" (click)="menuClick()"
+                                                [routerLink]="[menu.routerLink,menu.slug]"
                                                 [queryParams]="menu.routerQueryParameter"
                                                 class="nav-link">{{menu.name}}</a>
-                                        <a *ngIf="!menu.pageId && !menu.slug" [routerLink]="menu.routerLink"
-                                                [queryParams]="menu.routerQueryParameter"
+                                        <a *ngIf="!menu.pageId && !menu.slug" (click)="menuClick()"
+                                                [routerLink]="menu.routerLink" [queryParams]="menu.routerQueryParameter"
                                                 class="nav-link">{{menu.name}}</a>
-                                        <a *ngIf="menu.pageId && menu.page && menu.page.slug"
+                                        <a *ngIf="menu.pageId && menu.page && menu.page.slug" (click)="menuClick()"
                                                 [routerLink]="[menu.routerLink,menu.page.slug]"
                                                 [queryParams]="menu.routerQueryParameter"
                                                 class="nav-link">{{menu.name}}</a>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="navbar-collapse lang-drop"
                         *ngIf="(languages$|async) && (languages$|async)!=null && selectedLanguage!=null">
-                        <div class="row">
+                        <div class="grid">
                                 <p-dropdown [options]="(languages$|async)!" [(ngModel)]="selectedLanguage"
                                         optionLabel="name" (onChange)="onLangChange($event)"
                                         placeholder="Select a Country">

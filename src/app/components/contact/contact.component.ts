@@ -9,6 +9,7 @@ import { GeneralSettings } from 'src/app/models/general-settings';
 import { IApiResponse } from 'src/app/shared/models/api-response';
 import { BaseDropdownResponse } from 'src/app/shared/models/base-dropdown-response';
 import { Language } from 'src/app/shared/models/language';
+import { BusyService } from 'src/app/shared/services/busy.service';
 import { GeneralSettingsService } from 'src/app/shared/services/general-settings.service';
 import { LocalizationService } from 'src/app/shared/services/localization.service';
 import { MavDataService } from 'src/app/shared/services/mav-data.service';
@@ -30,6 +31,7 @@ export class ContactComponent implements OnInit {
     private dataService: MavDataService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
+    private busyService: BusyService
   ) { }
 
   menuItems!: MenuItem[];
@@ -46,6 +48,7 @@ export class ContactComponent implements OnInit {
   private unsubscribe = new Subject();
 
   ngOnInit(): void {
+    this.busyService.setBusy();
     this.localizationService.language$.subscribe((val) => {
       if (val != null && val.length > 0) {
         const langId = localStorage.getItem('langId');
@@ -62,6 +65,7 @@ export class ContactComponent implements OnInit {
         this.generalSettings = val;
         this.googleMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generalSettings.googleMapUrl);
         this.setTitleAndTags();
+        this.busyService.setIdle();
       }
     });
 
@@ -84,7 +88,7 @@ export class ContactComponent implements OnInit {
       supportTypeId: [{ value: null, disabled: false }, Validators.required],
       phoneNumber: [{ value: null, disabled: false }],
       email: [{ value: null, disabled: false }, Validators.required],
-      content: [{ value: null, disabled: false },Validators.required],
+      content: [{ value: null, disabled: false }, Validators.required],
     });
 
     this.formContact.get('supportType')?.valueChanges.subscribe(val => {
@@ -133,17 +137,32 @@ export class ContactComponent implements OnInit {
   }
 
   setTitleAndTags() {
+    this.meta.addTags([
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:locale', content: localStorage.getItem('culture')! },
+      { property: 'og:site_name', content: 'Klasik Merdiven' },
+    ]);
     this.localizationService.translation$.subscribe((val) => {
       if (val && val.length > 0) {
-        this.meta.addTags([
-          { name: 'description', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgDescription! },
-          { name: 'keywords', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgTitle! },
-          { property: 'og:title', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgTitle! },
-          { property: 'og:description', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgDescription! },
-          { property: 'og:image', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgImage! },
-        ]);
-        this.title.setTitle(this.translate('Contact.ControllerTitle'));
+        if (this.getGeneralSettingsTransByCurrentLangId?.contactOgDescription)
+          this.meta.addTag({ name: 'description', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgDescription! });
+
+
+        if (this.getGeneralSettingsTransByCurrentLangId?.contactOgKeywords) {
+          this.meta.addTag({ name: 'keywords', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgKeywords! });
+          this.meta.addTag({ property: 'og:keywords', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgKeywords! });
+        }
+
+        if (this.getGeneralSettingsTransByCurrentLangId?.contactOgTitle)
+          this.meta.addTag({ property: 'og:title', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgTitle! },);
+
+        this.meta.addTag({ property: 'og:type', content: 'website' });
+
+        if (this.getGeneralSettingsTransByCurrentLangId?.contactOgImage)
+          this.meta.addTag({ property: 'og:image', content: this.getGeneralSettingsTransByCurrentLangId?.contactOgImage! });
+
+        this.title.setTitle(this.translate('Common.Dashboard'));
       }
-    })
+    });
   }
 }

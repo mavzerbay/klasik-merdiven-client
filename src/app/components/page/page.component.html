@@ -3,13 +3,14 @@
     <ng-container *ngSwitchCase="'Grid'">
         <section class="ftco-section">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated"
+                <div class="grid">
+                    <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated"
                         *ngFor="let child of page.childPageList">
                         <a [routerLink]="['/p',child.slug]">
                             <div class="media block-6 services d-block text-center px-3 pb-4">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <img [src]="child.backgroundPath" [alt]="child.name">
+                                    <img [src]="child.backgroundPath" [alt]="child.name"
+                                        style="width: 100%;background-size: contain;">
                                 </div>
                                 <div class="media-body py-md-4">
                                     <h3>{{child.name}}</h3>
@@ -25,13 +26,13 @@
     <ng-container *ngSwitchCase="'List'">
         <section class="ftco-section ftco-portfolio">
             <div class="container">
-                <div class="row no-gutters">
-                    <div class="col-md-12 portfolio-wrap" *ngFor="let child of page.childPageList;let i = index">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-md-5 img js-fullheight" [class.order-md-last]="i%2==0"
+                <div class="grid grid-nogutter">
+                    <div class="md:col-12 portfolio-wrap" *ngFor="let child of page.childPageList;let i = index">
+                        <div class="grid grid-nogutter align-items-center">
+                            <div class="md:col-5 img js-fullheight" [class.order-md-last]="i%2==0"
                                 style="background-image: url(&quot;{{child.backgroundPath}}&quot;); height: 625px;">
                             </div>
-                            <div class="col-md-7">
+                            <div class="md:col-7">
                                 <div class="text pt-5 ftco-animate fadeInUp ftco-animated"
                                     [class.pl-0.pl-lg-5.pl-md-4]="i%2!=0" [class.pr-md-5]="i%2==0">
                                     <div class="px-4 px-lg-4">
@@ -53,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row mt-5">
+                <!-- <div class="grid mt-5">
                     <div class="col text-center">
                         <div class="block-27">
                             <ul>
@@ -74,8 +75,8 @@
     <ng-container *ngSwitchCase="'Blog'">
         <section class="ftco-section">
             <div class="container">
-                <div class="row d-flex">
-                    <div class="col-md-3 d-flex ftco-animate fadeInUp ftco-animated"
+                <div class="grid d-flex">
+                    <div class="md:col-3 d-flex ftco-animate fadeInUp ftco-animated"
                         *ngFor="let child of page.childPageList;let i = index">
                         <div class="blog-entry justify-content-end">
                             <div class="text">
@@ -92,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row mt-5">
+                <!-- <div class="grid mt-5">
                     <div class="col text-center">
                         <div class="block-27">
                             <ul>
@@ -113,19 +114,20 @@
     <ng-container *ngSwitchCase="'BlogDetail'">
         <section class="ftco-section">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
+                <div class="grid">
+                    <div class="md:col-8 ftco-animate fadeInUp ftco-animated">
                         <p>
                             <img [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
                         </p>
                         <div [innerHtml]="page.content"></div>
                         <div class="tag-widget post-tag-container mb-5 mt-5" *ngIf="getKeywords!=null">
                             <div class="tagcloud">
-                                <a href="#" *ngFor="let keyword of getKeywords" class="tag-cloud-link">{{keyword}}</a>
+                                <a style="cursor: pointer;" *ngFor="let keyword of getKeywords"
+                                    class="tag-cloud-link">{{keyword}}</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 sidebar ftco-animate fadeInUp ftco-animated">
+                    <div class="md:col-4 sidebar ftco-animate fadeInUp ftco-animated">
                         <div class="sidebar-box ftco-animate fadeInUp ftco-animated"
                             *ngIf="categories && categories.length>0">
                             <div class="categories">
@@ -140,19 +142,20 @@
                             *ngIf="recentBlogs && recentBlogs.length>0">
                             <h3>{{translate('Page.RecentBlogs')}}</h3>
                             <div class="block-21 mb-4 d-flex" *ngFor="let recent of recentBlogs">
-                                <a class="blog-img mr-4" style="background-image:url({{recent.backgroundPath}})"></a>
+                                <a class="blog-img mr-4" [routerLink]="['/p',recent.slug]"
+                                    style="background-image:url({{recent.backgroundPath}})"></a>
                                 <div class="text">
                                     <h3 class="heading">
-                                        <a href="#">{{recent.name}}</a>
+                                        <a [routerLink]="['/p',recent.slug]">{{recent.name}}</a>
                                     </h3>
                                     <div class="meta">
                                         <div>
-                                            <a href="#">
+                                            <a [routerLink]="['/p',recent.slug]">
                                                 <span class="pi pi-calendar"></span>
                                                 {{recent.createdDate | date:'M/d/yy'}}
                                             </a>
                                         </div>
-                                        <div><a href="#">
+                                        <div><a [routerLink]="['/p',recent.slug]">
                                                 <span class="pi pi-user-edit"></span>
                                                 {{recent.createdBy.name}}
                                             </a>
@@ -175,13 +178,13 @@
     <ng-container *ngSwitchCase="'Detail'">
         <section class="ftco-section">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
+                <div class="grid">
+                    <div class="md:col-8 ftco-animate fadeInUp ftco-animated">
                         <p>
                             <img [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
                         </p>
-                        <div *ngIf="galery" class="row">
-                            <div *ngFor="let image of galery; let index = index;" class="col-md-3" key="index">
+                        <div *ngIf="galery" class="grid">
+                            <div *ngFor="let image of galery; let index = index;" class="col-3" key="index">
                                 <img [src]="image.backgroundImagePath" [alt]="image.title"
                                     style="cursor: pointer;width: 100%;" (click)="imageClick(index)" />
                             </div>
@@ -189,17 +192,18 @@
                         <div [innerHtml]="page.content"></div>
                         <div class="tag-widget post-tag-container mb-5 mt-5" *ngIf="getKeywords!=null">
                             <div class="tagcloud">
-                                <a href="#" *ngFor="let keyword of getKeywords" class="tag-cloud-link">{{keyword}}</a>
+                                <a style="cursor: pointer;" *ngFor="let keyword of getKeywords"
+                                    class="tag-cloud-link">{{keyword}}</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 sidebar ftco-animate fadeInUp ftco-animated">
+                    <div class="md:col-4 sidebar ftco-animate fadeInUp ftco-animated">
                         <div class="sidebar-box ftco-animate fadeInUp ftco-animated"
                             *ngIf="categories && categories.length>0">
                             <div class="categories">
                                 <h3>{{translate('Page.Categories')}}</h3>
                                 <li *ngFor="let category of categories">
-                                    <a href="#">{{category.name}} <span>({{category.count}})</span>
+                                    <a>{{category.name}} <span>({{category.count}})</span>
                                     </a>
                                 </li>
                             </div>
@@ -208,19 +212,20 @@
                             *ngIf="recentBlogs && recentBlogs.length>0">
                             <h3>{{translate('Page.RecentProducts')}}</h3>
                             <div class="block-21 mb-4 d-flex" *ngFor="let recent of recentBlogs">
-                                <a class="blog-img mr-4" style="background-image:url({{recent.backgroundPath}})"></a>
+                                <a class="blog-img mr-4" [routerLink]="['/p',recent.slug]"
+                                    style="background-image:url({{recent.backgroundPath}})"></a>
                                 <div class="text">
                                     <h3 class="heading">
-                                        <a href="#">{{recent.name}}</a>
+                                        <a>{{recent.name}}</a>
                                     </h3>
                                     <div class="meta">
                                         <div>
-                                            <a href="#">
+                                            <a [routerLink]="['/p',recent.slug]">
                                                 <span class="pi pi-calendar"></span>
                                                 {{recent.createdDate | date:'M/d/yy'}}
                                             </a>
                                         </div>
-                                        <div><a href="#">
+                                        <div><a [routerLink]="['/p',recent.slug]">
                                                 <span class="pi pi-user-edit"></span>
                                                 {{recent.createdBy.name}}
                                             </a>
@@ -251,7 +256,7 @@
             [alt]="item.title" />
     </ng-template>
     <ng-template pTemplate="thumbnail" let-item style="max-height: 100px;">
-        <div class="row" style="margin-right: 0;margin-left: 0;margin-top: 0;justify-content: center;">
+        <div class="grid" style="margin-right: 0;margin-left: 0;margin-top: 0;justify-content: center;">
             <img [src]="item.backgroundImagePath" style="display: block;" width="80" height="60" [alt]="item.title" />
         </div>
     </ng-template>

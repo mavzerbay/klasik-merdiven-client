@@ -1,7 +1,7 @@
 <footer class="ftco-footer ftco-section">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-md">
+        <div class="grid mb-5">
+            <div class="md:col">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Klasik Merdiven</h2>
                     <p *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
@@ -19,7 +19,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md" *ngIf="leftMenuList && leftMenuList.length>0">
+            <div class="md:col" *ngIf="leftMenuList && leftMenuList.length>0">
                 <div class="ftco-footer-widget mb-4 ml-md-4">
                     <h2 class="ftco-heading-2">{{leftMenuParent}}</h2>
                     <ul class="list-unstyled">
@@ -31,7 +31,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md" *ngIf="middleMenuList && middleMenuList.length>0">
+            <div class="md:col" *ngIf="middleMenuList && middleMenuList.length>0">
                 <div class="ftco-footer-widget mb-4 ml-md-4">
                     <h2 class="ftco-heading-2">{{middleMenuParent}}</h2>
                     <ul class="list-unstyled">
@@ -43,7 +43,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md" *ngIf="rightMenuList && rightMenuList.length>0">
+            <div class="md:col" *ngIf="rightMenuList && rightMenuList.length>0">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">{{rightMenuParent}}</h2>
                     <ul class="list-unstyled">
@@ -55,7 +55,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md">
+            <div class="md:col">
                 <div class="ftco-footer-widget mb-4" *ngIf="generalSettings != null">
                     <h2 class="ftco-heading-2">{{translate('Footer.HaveAQuestion')}}</h2>
                     <div class="block-23 mb-3">
@@ -81,8 +81,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
+        <div class="grid">
+            <div class="md:col-12 text-center">
                 <p>
                     Copyright © 2021 All rights reserved | developed by <a
                         href="https://www.linkedin.com/in/erbay-mavzer-259487184/" target="_blank">Erbay MAVZER</a>

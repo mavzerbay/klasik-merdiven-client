@@ -6,8 +6,8 @@
             data-stellar-background-ratio="0.3">
             <div class="overlay"></div>
             <div class="container">
-                <div class="row no-gutters slider-text align-items-center">
-                    <div class="col-md-10 col-lg-7 ftco-animate d-flex align-items-end fadeInUp ftco-animated">
+                <div class="grid grid-nogutter slider-text align-items-center">
+                    <div class="md:col-10 lg:col-7 ftco-animate d-flex align-items-end fadeInUp ftco-animated">
                         <div class="text">
                             <h1 class="mb-4" *ngIf="media.title">{{media.title}}</h1>
                             <p *ngIf="media.summary" [style]="media.textStyle?media.textStyle:'font-size:18px'">
@@ -30,8 +30,8 @@
 <section class="ftco-section ftco-no-pb ftco-no-pt bg-primary"
     *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
     <div class="container">
-        <div class="row d-flex no-gutters">
-            <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
+        <div class="grid d-flex grid-nogutter">
+            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg d-block text-center px-4 py-5">
                     <div class="icon d-flex justify-content-center align-items-center">
                         <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info1Icon"></span>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg services-darken d-block text-center px-4 py-5">
                     <div class="icon d-flex justify-content-center align-items-center">
                         <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info2Icon"></span>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg services-lighten d-block text-center px-4 py-5">
                     <div class="icon d-flex justify-content-center align-items-center">
                         <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info3Icon"></span>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
                 <div class="media block-6 services services-bg d-block text-center px-4 py-5">
                     <div class="icon d-flex justify-content-center align-items-center">
                         <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info4Icon"></span>
@@ -82,8 +82,8 @@
 <section class="ftco-section ftco-no-pb ftco-no-pt"
     *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-7 order-md-last d-md-flex align-items-stretch">
+        <div class="grid">
+            <div class="lg:col-7 order-md-last d-md-flex align-items-stretch">
                 <div class="img w-100 img-2 mr-md-2" style="background-image:url(assets/images/about-us-1.png)"></div>
                 <div class="img w-100 img-2 img-overlay ml-md-2 p-4"
                     style="background-image:url(assets/images/about-us-2.png)">
@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 wrap-about py-md-5 ftco-animate fadeInUp ftco-animated">
+            <div class="lg:col-5 wrap-about py-md-5 ftco-animate fadeInUp ftco-animated">
                 <div class="heading-section pr-md-5">
                     <h2 class="mb-4">Klasik Merdiven</h2>
                     <p>{{getGeneralSettingsTransByCurrentLangId.aboutUs}}</p>
@@ -148,8 +148,8 @@
 </section>
 <section class="ftco-counter img" id="section-counter" *ngIf="generalSettings != null">
     <div class="container">
-        <div class="row pt-md-5">
-            <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
+        <div class="grid pt-md-5">
+            <div class="md:col-4 lg:col-4 sm:col-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
                     <div class="text text-border d-flex align-items-center justify-content-center ">
                         <strong class="number">{{generalSettings?.yearsOfExperienced}}</strong>
@@ -157,7 +157,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-4 lg:col-4 sm:col-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
                     <div class="text text-border d-flex align-items-center justify-content-center ">
                         <strong class="number">{{generalSettings?.projectDone}}</strong>
@@ -165,7 +165,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-4 col-sm-12 counter-wrap ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-4 lg:col-4 sm:col-12 counter-wrap ftco-animate fadeInUp ftco-animated">
                 <div class="block-18 py-md-5 mb-md-4">
                     <div class="text d-flex align-items-center justify-content-center ">
                         <strong class="number">{{generalSettings?.happyCustomer}}</strong>
@@ -177,21 +177,21 @@
     </div>
 </section>
 <section class="ftco-section ftco-portfolio" *ngIf="latestProjectList && latestProjectList.length>0">
-    <div class="row justify-content-center no-gutters">
-        <div class="col-md-12 heading-section text-center ftco-animate mb-5 fadeInUp ftco-animated">
+    <div class="grid justify-content-center grid-nogutter">
+        <div class="md:col-12 heading-section text-center ftco-animate mb-5 fadeInUp ftco-animated">
             <span class="subheading">{{latestProjectList[0].parentPage.name}}</span>
             <h2 class="mb-2">{{translate('Home.LatestProjects') | stringFormat: latestProjectList[0].parentPage.name}}
             </h2>
         </div>
     </div>
     <div class="container">
-        <div class="row no-gutters">
-            <div class="col-md-12 portfolio-wrap" *ngFor="let latestProject of latestProjectList;let i = index">
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-5 img js-fullheight" [class.order-md-last]="i%2==0"
-                        style="background-image: url(&quot;{{latestProject.backgroundPath}}&quot;); height: 625px;">
+        <div class="grid grid-nogutter">
+            <div class="md:col-12 portfolio-wrap" *ngFor="let latestProject of latestProjectList;let i = index">
+                <div class="grid grid-nogutter align-items-center">
+                    <div class="md:col-5 img js-fullheight" [class.order-md-last]="i%2==0"
+                        style="background-image: url(&quot;{{latestProject.backgroundPath}}&quot;); height: 625px;background-size: contain;">
                     </div>
-                    <div class="col-md-7">
+                    <div class="md:col-7">
                         <div class="text pt-5 ftco-animate fadeInUp ftco-animated" [class.pl-0.pl-lg-5.pl-md-4]="i%2!=0"
                             [class.pr-md-5]="i%2==0">
                             <div class="px-4 px-lg-4">
@@ -222,13 +222,13 @@
 <section class="ftco-section testimony-section bg-light"
     *ngIf="testimonialSlide && testimonialSlide.slideMedias!=null && testimonialSlide.slideMedias.length>0">
     <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
+        <div class="grid justify-content-center mb-5">
+            <div class="md:col-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
                 <h2 class="mb-3">{{translate('Home.CustomerFeedBack')}}</h2>
             </div>
         </div>
-        <div class="row ftco-animate fadeInUp ftco-animated">
-            <div class="col-md-12">
+        <div class="grid ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-12">
                 <p-carousel [value]="testimonialSlide.slideMedias" [numVisible]="3" [numScroll]="3"
                     [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions" [circular]="true"
                     [showIndicators]="false" [showNavigators]="false">
@@ -257,14 +257,14 @@
 </section>
 <section class="ftco-section" *ngIf="latestBlogList && latestBlogList.length>0">
     <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
+        <div class="grid justify-content-center mb-5">
+            <div class="md:col-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
                 <span class="subheading">{{translate('Home.Blog')}}</span>
                 <h2>{{'Page.RecentBlogs'}}</h2>
             </div>
         </div>
-        <div class="row d-flex">
-            <div class="col-md-{{12/latestBlogList.length}} d-flex ftco-animate fadeInUp ftco-animated"
+        <div class="grid d-flex">
+            <div class="md:col-{{12/latestBlogList.length}} d-flex ftco-animate fadeInUp ftco-animated"
                 *ngFor="let blog of latestBlogList">
                 <div class="blog-entry justify-content-end">
                     <div class="text">
