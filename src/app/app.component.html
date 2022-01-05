@@ -8,8 +8,11 @@
             stroke="#96bb7c"></circle>
     </svg>
 </div>
-<a *ngIf="generalSettings && getContactMessage!='Contact.WhatsAppMessage'"
-    href="https://api.whatsapp.com/send?phone={{generalSettings.contactWhatsApp}}&text={{getContactMessage}}"
+<a *ngIf="generalSettings && getContactWhatsappMessage!='Contact.WhatsAppMessage'"
+    href="https://api.whatsapp.com/send?phone={{generalSettings.contactWhatsApp}}&text={{getContactWhatsappMessage}}"
     class="float" target="_blank">
     <i class="pi pi-whatsapp my-float"></i>
+</a>
+<a *ngIf="generalSettings" href="tel:{{generalSettings.contactPhone}}" class="float-phone">
+    <i class="pi pi-phone my-float"></i>
 </a>

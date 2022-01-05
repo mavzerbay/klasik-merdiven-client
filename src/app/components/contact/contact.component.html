@@ -3,51 +3,26 @@
     <div class="container">
         <div class="grid block-9 justify-content-center mb-5">
             <div class="md:col-8 mb-md-5">
-                <form [formGroup]="formContact" (ngSubmit)="sendContactForm()" class="bg-light p-5 contact-form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" formControlName="name"
-                            [placeholder]="translate('Contact.YourName')+'*'">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" formControlName="surname"
-                            [placeholder]="translate('Contact.YourSurname')+'*'">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" formControlName="email"
-                            [placeholder]="translate('Contact.YourEmail')+'*'">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" formControlName="phoneNumber"
-                            [placeholder]="translate('Contact.YourPhoneNumber')">
-                    </div>
-                    <div class="form-group">
-                        <div class="form-field">
-                            <div class="select-wrap">
-                                <div class="icon-arr"><span class="ion-ios-arrow-down"></span></div>
-                                <select formControlName="supportType" class="form-control">
-                                    <option [ngValue]="null" disabled style="color:black">
-                                        {{translate('Contact.SelectSupportTicketType')+'*'}}
-                                    </option>
-                                    <option *ngFor="let type of supportTicketTypeList" [ngValue]="type"
-                                        style="color:black">
-                                        {{type.name}}
-                                    </option>
-                                </select>
+                <div class="grid" *ngIf="generalSettings">
+                    <div class="col-12 md:col-6 lg:col-6" style="border:1px solid #000">
+                        <div class="grid" style="display: flex;align-items: center;padding-top: .75rem;">
+                            <div class="col-4" style="text-align: center;">
+                                <i class="pi pi-phone" style="font-size: 2rem;"></i>
                             </div>
+                            <div class="col-8" style="font-weight: 700;font-size: 1.25rem;">
+                                {{generalSettings.contactPhone}}</div>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <input type="text" class="form-control" [placeholder]="translate('Contact.Subject')">
-                    </div> -->
-                    <div class="form-group">
-                        <textarea formControlName="content" cols="30" rows="7" class="form-control"
-                            [placeholder]="translate('Contact.Message')+'*'"></textarea>
+                    <div class="col-12 md:col-6 lg:col-6" style="background-color: #25d366;">
+                        <div class="grid" style="display: flex;align-items: center;padding-top: .75rem;">
+                            <div class="col-4" style="text-align: center;">
+                                <i class="pi pi-whatsapp" style="font-size: 2rem;color: #fff;"></i>
+                            </div>
+                            <div class="col-8" style="font-weight: 700;font-size: 1.25rem;color: #fff;">
+                                {{generalSettings.contactWhatsApp}}</div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" [disabled]="formContact.invalid" [value]="translate('Contact.SendMessage')"
-                            class="btn btn-primary py-3 px-5">
-                    </div>
-                </form>
+                </div>
                 <h2 class="text-center mt-5">{{translate('Contact.Summary')}}</h2>
             </div>
         </div>
@@ -78,7 +53,8 @@
                 </div>
             </div>
         </div>
-        <div class="grid justify-content-center" *ngIf="generalSettings && generalSettings.googleMapUrl && googleMapUrl">
+        <div class="grid justify-content-center"
+            *ngIf="generalSettings && generalSettings.googleMapUrl && googleMapUrl">
             <div class="md:col-8">
                 <div id="map" class="bg-white" style="position: relative; overflow: hidden;">
                     <iframe [src]="googleMapUrl" style="border:0;width: 100%;height: 400px;" allowfullscreen=""

@@ -18,6 +18,7 @@ export class Page implements BaseModel {
     pageType!: any;
     name!: string;
     slug!: string;
+    languageSlugList!: PageTransDropdownModel[];
     summary!: string;
     content!: string;
     headerPath!: string;
@@ -28,4 +29,10 @@ export class Page implements BaseModel {
     ogImagePath!: string;
     ogType!: string;
     childPageList!: Page[];
+}
+export class PageTransDropdownModel implements BaseModel {
+    id!: string;
+    name!: string;
+    slug!: string;
+    languageId!: string;
 }

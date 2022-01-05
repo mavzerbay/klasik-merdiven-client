@@ -38,9 +38,8 @@
                                     <div class="px-4 px-lg-4">
                                         <div class="desc">
                                             <div class="top">
-                                                <span class="subheading">{{child.createdBy.name}}
-                                                    {{child.createdDate |
-                                                    date:'M/d/yy'}}</span>
+                                                <span class="subheading">{{child.createdDate |
+                                                    date:'dd/MM/yyyy'}}</span>
                                                 <h2 class="mb-4"><a [routerLink]="['/p',child.slug]">{{child.name}}</a>
                                                 </h2>
                                             </div>
@@ -84,9 +83,7 @@
                                     style="background-image:url({{child.backgroundPath}})">
                                 </a>
                                 <div class="meta mb-3">
-                                    <div><a href="#">{{child.createdDate | date:'M/d/yy'}}</a></div>
-                                    <div><a href="#">{{child.createdBy.name}}</a></div>
-                                    <!-- <div><a href="#" class="meta-chat"><span class="pi pi-comment"></span> 3</a></div> -->
+                                    <div><a href="#">{{child.createdDate | date:'dd/MM/yyyy'}}</a></div>
                                 </div>
                                 <h3 class="heading"><a href="#">{{child.name}}</a></h3>
                             </div>
@@ -152,12 +149,7 @@
                                         <div>
                                             <a [routerLink]="['/p',recent.slug]">
                                                 <span class="pi pi-calendar"></span>
-                                                {{recent.createdDate | date:'M/d/yy'}}
-                                            </a>
-                                        </div>
-                                        <div><a [routerLink]="['/p',recent.slug]">
-                                                <span class="pi pi-user-edit"></span>
-                                                {{recent.createdBy.name}}
+                                                {{recent.createdDate | date:'dd/MM/yyyy'}}
                                             </a>
                                         </div>
                                         <!-- <div>
@@ -180,13 +172,32 @@
             <div class="container">
                 <div class="grid">
                     <div class="md:col-8 ftco-animate fadeInUp ftco-animated">
-                        <p>
+                        <p *ngIf="!galery || galery.length==0">
                             <img [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
                         </p>
-                        <div *ngIf="galery" class="grid">
-                            <div *ngFor="let image of galery; let index = index;" class="col-3" key="index">
-                                <img [src]="image.backgroundImagePath" [alt]="image.title"
-                                    style="cursor: pointer;width: 100%;" (click)="imageClick(index)" />
+                        <div *ngIf="galery && galery.length>0" class="grid">
+                            <div class="col-12">
+                                <p-galleria [value]="galery" [responsiveOptions]="responsiveOptions"
+                                    [containerStyle]="{'width': '100%','max-height':'505px'}" [numVisible]="5">
+                                    <ng-template pTemplate="item" let-item>
+                                        <img [src]="item.backgroundImagePath"
+                                            [style]="'width: 100%; display: block;max-height:410px;object-fit: contain;'"
+                                            [alt]="item.title" />
+                                    </ng-template>
+                                    <ng-template pTemplate="thumbnail" let-item>
+                                        <div class="grid"
+                                            style="margin-right: 0;margin-left: 0;margin-top: 0;justify-content: center;">
+                                            <img [src]="item.backgroundImagePath" style="display: block;" width="80"
+                                                height="60" [alt]="item.title" />
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="caption" let-item>
+                                        <h4 *ngIf="item.title" style="margin-bottom: .5rem; color: #ffffff;">
+                                            {{item.title}}
+                                        </h4>
+                                        <p *ngIf="item.summary">{{item.summary}}</p>
+                                    </ng-template>
+                                </p-galleria>
                             </div>
                         </div>
                         <div [innerHtml]="page.content"></div>
@@ -222,12 +233,7 @@
                                         <div>
                                             <a [routerLink]="['/p',recent.slug]">
                                                 <span class="pi pi-calendar"></span>
-                                                {{recent.createdDate | date:'M/d/yy'}}
-                                            </a>
-                                        </div>
-                                        <div><a [routerLink]="['/p',recent.slug]">
-                                                <span class="pi pi-user-edit"></span>
-                                                {{recent.createdBy.name}}
+                                                {{recent.createdDate | date:'dd/MM/yyyy'}}
                                             </a>
                                         </div>
                                         <!-- <div>
@@ -246,22 +252,3 @@
         </section>
     </ng-container>
 </ng-container>
-
-<p-galleria [value]="galery" [(visible)]="displayCustom" [responsiveOptions]="responsiveOptions"
-    [containerStyle]="{'max-width': '50%'}" [numVisible]="9" [circular]="true" [fullScreen]="true"
-    [showItemNavigators]="true" [baseZIndex]="100000">
-    <ng-template pTemplate="item" let-item>
-        <img [src]="item.backgroundImagePath"
-            [style]="'width: 100%; display: block;max-height:'+innerHeight+'px;object-fit: contain;'"
-            [alt]="item.title" />
-    </ng-template>
-    <ng-template pTemplate="thumbnail" let-item style="max-height: 100px;">
-        <div class="grid" style="margin-right: 0;margin-left: 0;margin-top: 0;justify-content: center;">
-            <img [src]="item.backgroundImagePath" style="display: block;" width="80" height="60" [alt]="item.title" />
-        </div>
-    </ng-template>
-    <ng-template pTemplate="caption" let-item>
-        <h4 style="margin-bottom: .5rem; color: #ffffff;">{{item.title}}</h4>
-        <p>{{item.summary}}</p>
-    </ng-template>
-</p-galleria>

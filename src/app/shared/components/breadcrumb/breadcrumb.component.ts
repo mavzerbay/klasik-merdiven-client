@@ -15,7 +15,7 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit, OnChanges {
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   home = { label: this.translate('Common.Dashboard'), url: '/' };
   @Input() menuItems!: MenuItem[];
-  @Input() headerPath: string = 'assets/images/default-breadcrumb.png';
+  @Input() headerPath: string = 'assets/images/default-breadcrumb.webp';
 
   constructor(
     private localizationService: LocalizationService,
@@ -30,7 +30,7 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     if (changes && changes['headerPath']) {
-      this.headerPath = changes['headerPath'].currentValue ?? 'assets/images/default-breadcrumb.png';
+      this.headerPath = changes['headerPath'].currentValue ?? 'assets/images/default-breadcrumb.webp';
       this.cdRef.detectChanges();
     }
   }

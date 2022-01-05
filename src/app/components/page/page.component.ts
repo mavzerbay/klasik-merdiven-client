@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, isDevMode, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, isDevMode, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { Page } from 'src/app/models/page';
@@ -17,15 +17,17 @@ import { MavDataService } from 'src/app/shared/services/mav-data.service';
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent implements OnInit {
-
   constructor(
     private dataService: MavDataService,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private localizationService: LocalizationService,
     private meta: Meta,
     private title: Title,
-    private busyService:BusyService,
-  ) { }
+    private busyService: BusyService,
+  ) {
+
+  }
 
   page!: Page;
   recentBlogs!: Page[];
@@ -59,7 +61,7 @@ export class PageComponent implements OnInit {
 
   ngOnInit(): void {
     this.busyService.setBusy();
-    this.route.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       if (params['slug'])
         this.getPage(params['slug']);
     });
@@ -74,6 +76,12 @@ export class PageComponent implements OnInit {
     this.dataService.getById<Page>(`/Page`, slug).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<Page>) => {
       if (response && response.isSuccess) {
         this.page = response.dataSingle;
+        if ('/p/' + this.page.slug != location.pathname) {
+          const langId = localStorage.getItem('langId');
+          if (langId && this.page.languageSlugList.some(x => x.languageId == langId && x.slug != null)) {
+            this.router.navigate(['/p', this.page.languageSlugList.find(x => x.languageId == langId)?.slug!]);
+          }
+        }
         if (this.page.pageType.keyName == 'BlogDetail' || this.page.pageType.keyName == 'Detail') {
           this.getGalery(this.page.id);
           if (this.page.pageType.keyName == 'BlogDetail')
@@ -81,6 +89,7 @@ export class PageComponent implements OnInit {
           else
             this.getRecentPages();
         }
+
         this.menuItems = [
           { label: this.page.name, url: 'p/' + slug }
         ]
@@ -109,9 +118,14 @@ export class PageComponent implements OnInit {
 
   getGalery(pageId: string) {
     this.dataService.getById<Slide>(`/Slide/GetByPageId`, pageId).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<Slide>) => {
+      let slideList: SlideMedia[] = this.page.backgroundPath ? [{ id: '', slideId: '', languageId: '', activity: true, buttonStyle: '', buttonText: '', displayOrder: -1, linkPage: '', linkPageId: '', routerLink: '', routerQueryParameters: '', summary: '', textStyle: '', title: '', backgroundImagePath: this.page.backgroundPath }] : [];
       if (response && response.isSuccess) {
-        this.galery = response.dataSingle.slideMedias;
+        if (slideList.length > 0)
+          this.galery = slideList.concat(response.dataSingle.slideMedias);
+        else
+          this.galery = response.dataSingle.slideMedias;
       }
+
     }, error => {
       if (isDevMode())
         console.log(error);

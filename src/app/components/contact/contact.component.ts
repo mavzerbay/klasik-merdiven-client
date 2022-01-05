@@ -77,8 +77,8 @@ export class ContactComponent implements OnInit {
       }
     })
 
-    this.createContactForm();
-    this.getSupportTicketType();
+    // this.createContactForm();
+    // this.getSupportTicketType();
   }
   createContactForm() {
     this.formContact = this.formBuilder.group({

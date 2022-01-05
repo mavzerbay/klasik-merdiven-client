@@ -27,66 +27,49 @@
         </section>
     </ng-template>
 </p-carousel>
-<section class="ftco-section ftco-no-pb ftco-no-pt bg-primary"
-    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
+<section class="ftco-section testimony-section bg-light"
+    *ngIf="testimonialSlide && testimonialSlide.slideMedias!=null && testimonialSlide.slideMedias.length>0">
     <div class="container">
-        <div class="grid d-flex grid-nogutter">
-            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
-                <div class="media block-6 services services-bg d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center">
-                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info1Icon"></span>
-                    </div>
-                    <div class="media-body">
-                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info1Title}}</h3>
-                        <p>{{getGeneralSettingsTransByCurrentLangId?.info1Description}}</p>
-                    </div>
-                </div>
+        <div class="grid justify-content-center mb-5">
+            <div class="md:col-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
+                <h2 class="mb-3">{{translate('Home.CustomerFeedBack')}}</h2>
             </div>
-            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
-                <div class="media block-6 services services-bg services-darken d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center">
-                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info2Icon"></span>
-                    </div>
-                    <div class="media-body">
-                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info2Title}}</h3>
-                        <p>{{getGeneralSettingsTransByCurrentLangId?.info2Description}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
-                <div class="media block-6 services services-bg services-lighten d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center">
-                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info3Icon"></span>
-                    </div>
-                    <div class="media-body">
-                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info3Title}}</h3>
-                        <p>{{getGeneralSettingsTransByCurrentLangId?.info3Description}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="md:col-3 d-flex align-items-stretch ftco-animate fadeInUp ftco-animated">
-                <div class="media block-6 services services-bg d-block text-center px-4 py-5">
-                    <div class="icon d-flex justify-content-center align-items-center">
-                        <span [class]="'pi '+getGeneralSettingsTransByCurrentLangId?.info4Icon"></span>
-                    </div>
-                    <div class="media-body">
-                        <h3>{{getGeneralSettingsTransByCurrentLangId?.info4Title}}</h3>
-                        <p>{{getGeneralSettingsTransByCurrentLangId?.info4Description}}</p>
-                    </div>
-                </div>
+        </div>
+        <div class="grid ftco-animate fadeInUp ftco-animated">
+            <div class="md:col-12">
+                <p-carousel [value]="testimonialSlide.slideMedias" [numVisible]="3" [numScroll]="3"
+                    [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions" [circular]="true"
+                    [showIndicators]="false" [showNavigators]="false">
+                    <ng-template let-media pTemplate="item">
+                        <div class="item">
+                            <div class="testimony-wrap py-4">
+                                <div class="text">
+                                    <span class="pi pi-thumbs-up"></span>
+                                    <p class="mb-4">{{media.summary}}</p>
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-img"
+                                            style="background-image:url({{media.backgroundImagePath}})">
+                                        </div>
+                                        <div class="pl-3">
+                                            <p class="name">{{media.title}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
             </div>
         </div>
     </div>
 </section>
-
 <section class="ftco-section ftco-no-pb ftco-no-pt"
-    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null">
+    *ngIf="generalSettings != null && getGeneralSettingsTransByCurrentLangId!=null" style="padding-top:2rem">
     <div class="container">
         <div class="grid">
-            <div class="lg:col-7 order-md-last d-md-flex align-items-stretch">
-                <div class="img w-100 img-2 mr-md-2" style="background-image:url(assets/images/about-us-1.png)"></div>
+            <div class="lg:col-6 order-md-last d-md-flex align-items-stretch">
                 <div class="img w-100 img-2 img-overlay ml-md-2 p-4"
-                    style="background-image:url(assets/images/about-us-2.png)">
+                    style="background-image:url(assets/images/about-us-2.webp)">
                     <div class="request-quote py-5">
                         <div class="py-2">
                             <h3>{{translate('Home.ContactUs')}}</h3>
@@ -137,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            <div class="lg:col-5 wrap-about py-md-5 ftco-animate fadeInUp ftco-animated">
+            <div class="lg:col-6 wrap-about py-md-5 ftco-animate fadeInUp ftco-animated">
                 <div class="heading-section pr-md-5">
                     <h2 class="mb-4">Klasik Merdiven</h2>
                     <p>{{getGeneralSettingsTransByCurrentLangId.aboutUs}}</p>
@@ -176,7 +159,7 @@
         </div>
     </div>
 </section>
-<section class="ftco-section ftco-portfolio" *ngIf="latestProjectList && latestProjectList.length>0">
+<section class="ftco-section ftco-portfolio bg-light" *ngIf="latestProjectList && latestProjectList.length>0">
     <div class="grid justify-content-center grid-nogutter">
         <div class="md:col-12 heading-section text-center ftco-animate mb-5 fadeInUp ftco-animated">
             <span class="subheading">{{latestProjectList[0].parentPage.name}}</span>
@@ -197,9 +180,8 @@
                             <div class="px-4 px-lg-4">
                                 <div class="desc">
                                     <div class="top">
-                                        <span class="subheading">{{latestProject.createdBy.name}}
-                                            {{latestProject.createdDate |
-                                            date:'M/d/yy'}}</span>
+                                        <span class="subheading">{{latestProject.createdDate |
+                                            date:'dd/MM/yyyy'}}</span>
                                         <h2 class="mb-4"><a
                                                 [routerLink]="['/p',latestProject.slug]">{{latestProject.name}}</a>
                                         </h2>
@@ -214,43 +196,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="ftco-section testimony-section bg-light"
-    *ngIf="testimonialSlide && testimonialSlide.slideMedias!=null && testimonialSlide.slideMedias.length>0">
-    <div class="container">
-        <div class="grid justify-content-center mb-5">
-            <div class="md:col-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
-                <h2 class="mb-3">{{translate('Home.CustomerFeedBack')}}</h2>
-            </div>
-        </div>
-        <div class="grid ftco-animate fadeInUp ftco-animated">
-            <div class="md:col-12">
-                <p-carousel [value]="testimonialSlide.slideMedias" [numVisible]="3" [numScroll]="3"
-                    [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions" [circular]="true"
-                    [showIndicators]="false" [showNavigators]="false">
-                    <ng-template let-media pTemplate="item">
-                        <div class="item">
-                            <div class="testimony-wrap py-4">
-                                <div class="text">
-                                    <span class="pi pi-thumbs-up"></span>
-                                    <p class="mb-4">{{media.summary}}</p>
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-img"
-                                            style="background-image:url({{media.backgroundImagePath}})">
-                                        </div>
-                                        <div class="pl-3">
-                                            <p class="name">{{media.title}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-                </p-carousel>
             </div>
         </div>
     </div>
@@ -273,11 +218,8 @@
                         </a>
                         <div class="meta mb-3">
                             <div><a [routerLink]="['/p',blog.slug]">{{blog.createdDate |
-                                    date:'M/d/yy'}}</a>
+                                    date:'dd/MM/yyyy'}}</a>
                             </div>
-                            <div><a [routerLink]="['/p',blog.slug]">{{blog.createdBy.name}}</a></div>
-                            <!-- <div><a [routerLink]="['/p',blog.slug]" class="meta-chat"><span
-                                        class="pi pi-comment"></span> 3</a></div> -->
                         </div>
                         <h3 class="heading"><a [routerLink]="['/p',blog.slug]">{{blog.name}}</a></h3>
                     </div>

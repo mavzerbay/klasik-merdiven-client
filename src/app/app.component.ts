@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
     return this.localizationService.translate(keyName);
   }
 
-  get getContactMessage(){
+  get getContactWhatsappMessage(){
     return this.translate('Contact.WhatsAppMessage');
   }
 }
