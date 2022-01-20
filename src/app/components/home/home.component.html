@@ -1,8 +1,8 @@
 <p-carousel [value]="slideMediaList" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="10000"
     [showIndicators]="false" [showNavigators]="false">
     <ng-template let-media pTemplate="item">
-        <section class="hero-wrap"
-            style="background-image: url(&quot;{{media.backgroundImagePath}}&quot;), linear-gradient(#fff, #fffff2); background-position: 50% 0%;"
+        <section class="hero-wrap" appLazyLoad [src]="media.backgroundImagePath"
+            style="background-image: url(&quot;{{media.backgroundImagePath}}&quot;), linear-gradient(#fff, #fffff2); background-position: 50% 0%;background-size: 100% 100%;"
             data-stellar-background-ratio="0.3">
             <div class="overlay"></div>
             <div class="container">
@@ -47,7 +47,8 @@
                                     <span class="pi pi-thumbs-up"></span>
                                     <p class="mb-4">{{media.summary}}</p>
                                     <div class="d-flex align-items-center">
-                                        <div class="user-img"
+                                        <div class="user-img" appLazyLoad [src]="media.backgroundImagePath"
+                                            [canBeThumb]="true"
                                             style="background-image:url({{media.backgroundImagePath}})">
                                         </div>
                                         <div class="pl-3">
@@ -68,7 +69,7 @@
     <div class="container">
         <div class="grid">
             <div class="lg:col-6 order-md-last d-md-flex align-items-stretch">
-                <div class="img w-100 img-2 img-overlay ml-md-2 p-4"
+                <div class="img w-100 img-2 img-overlay ml-md-2 p-4" appLazyLoad src="assets/images/about-us-2.webp"
                     style="background-image:url(assets/images/about-us-2.webp)">
                     <div class="request-quote py-5">
                         <div class="py-2">
@@ -171,7 +172,8 @@
         <div class="grid grid-nogutter">
             <div class="md:col-12 portfolio-wrap" *ngFor="let latestProject of latestProjectList;let i = index">
                 <div class="grid grid-nogutter align-items-center">
-                    <div class="md:col-5 img js-fullheight" [class.order-md-last]="i%2==0"
+                    <div class="md:col-5 img js-fullheight" [class.order-md-last]="i%2==0" appLazyLoad
+                        [src]="latestProject.backgroundPath"
                         style="background-image: url(&quot;{{latestProject.backgroundPath}}&quot;); height: 625px;background-size: contain;">
                     </div>
                     <div class="md:col-7">
@@ -213,7 +215,7 @@
                 *ngFor="let blog of latestBlogList">
                 <div class="blog-entry justify-content-end">
                     <div class="text">
-                        <a [routerLink]="['/p',blog.slug]" class="block-20 img"
+                        <a [routerLink]="['/p',blog.slug]" class="block-20 img" appLazyLoad [src]="blog.backgroundPath"
                             style="background-image:url({{blog.backgroundPath}})">
                         </a>
                         <div class="meta mb-3">

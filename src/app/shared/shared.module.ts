@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { LazyLoadDirective } from './directives/lazy-load.directive';
 
 
 
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     BreadcrumbComponent,
     StringFormatPipe,
+    LazyLoadDirective,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { FormsModule } from '@angular/forms';
     //PrimeNg Modules
     ButtonModule,
     DropdownModule,
+    LazyLoadDirective,
   ]
 })
 export class SharedModule { }

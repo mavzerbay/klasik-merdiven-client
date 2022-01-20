@@ -7,8 +7,9 @@ import { PageComponent } from './components/page/page.component';
 const routes: Routes = [
   { path: ':slug', component: HomeComponent },
   { path: '', component: HomeComponent },
-  { path: 'c/:parentSlug?/:slug', component: ContactComponent, data: { breadcrumb: 'Contact.ControllerTitle' } },
+  { path: 'c/:slug', component: ContactComponent, data: { breadcrumb: 'Contact.ControllerTitle' } },
   { path: 'p/:slug', component: PageComponent, data: { breadcrumb: 'Contact.ControllerTitle' } },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({

@@ -9,8 +9,7 @@
                         <a [routerLink]="['/p',child.slug]">
                             <div class="media block-6 services d-block text-center px-3 pb-4">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <img [src]="child.backgroundPath" [alt]="child.name"
-                                        style="width: 100%;background-size: contain;">
+                                    <img appLazyLoad [src]="child.backgroundPath" [alt]="child.name" class="grid_image">
                                 </div>
                                 <div class="media-body py-md-4">
                                     <h3>{{child.name}}</h3>
@@ -29,7 +28,8 @@
                 <div class="grid grid-nogutter">
                     <div class="md:col-12 portfolio-wrap" *ngFor="let child of page.childPageList;let i = index">
                         <div class="grid grid-nogutter align-items-center">
-                            <div class="md:col-5 img js-fullheight" [class.order-md-last]="i%2==0"
+                            <div class="md:col-5 img js-fullheight" [class.order-md-last]="i%2==0" appLazyLoad
+                                [src]="child.backgroundPath"
                                 style="background-image: url(&quot;{{child.backgroundPath}}&quot;); height: 625px;">
                             </div>
                             <div class="md:col-7">
@@ -79,8 +79,8 @@
                         *ngFor="let child of page.childPageList;let i = index">
                         <div class="blog-entry justify-content-end">
                             <div class="text">
-                                <a [routerLink]="['/p',child.slug]" class="block-20 img"
-                                    style="background-image:url({{child.backgroundPath}})">
+                                <a [routerLink]="['/p',child.slug]" class="block-20 img" appLazyLoad [canBeThumb]="true"
+                                    [src]="child.backgroundPath" style="background-image:url({{child.backgroundPath}})">
                                 </a>
                                 <div class="meta mb-3">
                                     <div><a href="#">{{child.createdDate | date:'dd/MM/yyyy'}}</a></div>
@@ -114,7 +114,7 @@
                 <div class="grid">
                     <div class="md:col-8 ftco-animate fadeInUp ftco-animated">
                         <p>
-                            <img [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
+                            <img appLazyLoad [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
                         </p>
                         <div [innerHtml]="page.content"></div>
                         <div class="tag-widget post-tag-container mb-5 mt-5" *ngIf="getKeywords!=null">
@@ -139,7 +139,8 @@
                             *ngIf="recentBlogs && recentBlogs.length>0">
                             <h3>{{translate('Page.RecentBlogs')}}</h3>
                             <div class="block-21 mb-4 d-flex" *ngFor="let recent of recentBlogs">
-                                <a class="blog-img mr-4" [routerLink]="['/p',recent.slug]"
+                                <a class="blog-img mr-4" [routerLink]="['/p',recent.slug]" appLazyLoad
+                                    [src]="recent.backgroundPath" [canBeThumb]="true"
                                     style="background-image:url({{recent.backgroundPath}})"></a>
                                 <div class="text">
                                     <h3 class="heading">
@@ -172,32 +173,21 @@
             <div class="container">
                 <div class="grid">
                     <div class="md:col-8 ftco-animate fadeInUp ftco-animated">
-                        <p *ngIf="!galery || galery.length==0">
-                            <img [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
+                        <p>
+                            <img appLazyLoad [src]="page.backgroundPath" [alt]="page.name" class="img-fluid">
                         </p>
-                        <div *ngIf="galery && galery.length>0" class="grid">
-                            <div class="col-12">
-                                <p-galleria [value]="galery" [responsiveOptions]="responsiveOptions"
-                                    [containerStyle]="{'width': '100%','max-height':'505px'}" [numVisible]="5">
-                                    <ng-template pTemplate="item" let-item>
-                                        <img [src]="item.backgroundImagePath"
-                                            [style]="'width: 100%; display: block;max-height:410px;object-fit: contain;'"
-                                            [alt]="item.title" />
-                                    </ng-template>
-                                    <ng-template pTemplate="thumbnail" let-item>
-                                        <div class="grid"
-                                            style="margin-right: 0;margin-left: 0;margin-top: 0;justify-content: center;">
-                                            <img [src]="item.backgroundImagePath" style="display: block;" width="80"
-                                                height="60" [alt]="item.title" />
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="caption" let-item>
-                                        <h4 *ngIf="item.title" style="margin-bottom: .5rem; color: #ffffff;">
-                                            {{item.title}}
-                                        </h4>
-                                        <p *ngIf="item.summary">{{item.summary}}</p>
-                                    </ng-template>
-                                </p-galleria>
+                        <div *ngIf="galery" class="grid">
+                            <div *ngFor="let image of galery; let index = index;" class="col-3" key="index">
+                                <img appLazyLoad [canBeThumb]="true" [src]="image.backgroundImagePath"
+                                    [alt]="image.title" style="cursor: pointer;width: 100%;height:125px"
+                                    (click)="imageClick(index)" />
+                            </div>
+                        </div>
+                        <div [innerHtml]="page.content"></div>
+                        <div class="tag-widget post-tag-container mb-5 mt-5" *ngIf="getKeywords!=null">
+                            <div class="tagcloud">
+                                <a style="cursor: pointer;" *ngFor="let keyword of getKeywords"
+                                    class="tag-cloud-link">{{keyword}}</a>
                             </div>
                         </div>
                         <div [innerHtml]="page.content"></div>
@@ -223,7 +213,8 @@
                             *ngIf="recentBlogs && recentBlogs.length>0">
                             <h3>{{translate('Page.RecentProducts')}}</h3>
                             <div class="block-21 mb-4 d-flex" *ngFor="let recent of recentBlogs">
-                                <a class="blog-img mr-4" [routerLink]="['/p',recent.slug]"
+                                <a class="blog-img mr-4" [routerLink]="['/p',recent.slug]" appLazyLoad
+                                    [src]="recent.backgroundPath" [canBeThumb]="true"
                                     style="background-image:url({{recent.backgroundPath}})"></a>
                                 <div class="text">
                                     <h3 class="heading">
@@ -252,3 +243,11 @@
         </section>
     </ng-container>
 </ng-container>
+<p-galleria [value]="galery" [(visible)]="displayCustom" [responsiveOptions]="responsiveOptions"
+    [containerStyle]="{'max-width': '850px'}" [numVisible]="7" [circular]="true" [fullScreen]="true"
+    [showItemNavigators]="true" [showThumbnails]="false" [baseZIndex]="100000">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.backgroundImagePath" [style]="'width: 100%; display: block;max-height:'+innerHeight+'px;'"
+            [alt]="item.title?item.title:'Klasik Merdiven'" />
+    </ng-template>
+</p-galleria>

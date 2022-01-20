@@ -55,7 +55,7 @@ export class PageComponent implements OnInit {
 
   menuItems!: MenuItem[];
 
-  innerHeight = window.innerHeight - 100;
+  innerHeight = window.innerHeight;
 
   private unsubscribe = new Subject();
 
@@ -73,9 +73,15 @@ export class PageComponent implements OnInit {
   }
 
   getPage(slug: string) {
+    this.page = new Page;
+    this.categories = [];
+    this.galery = [];
+    this.recentBlogs = [];
+
     this.dataService.getById<Page>(`/Page`, slug).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<Page>) => {
       if (response && response.isSuccess) {
         this.page = response.dataSingle;
+        this.page.childPageList = this.page.childPageList.filter(x => x.name != null);
         if ('/p/' + this.page.slug != location.pathname) {
           const langId = localStorage.getItem('langId');
           if (langId && this.page.languageSlugList.some(x => x.languageId == langId && x.slug != null)) {
@@ -118,12 +124,8 @@ export class PageComponent implements OnInit {
 
   getGalery(pageId: string) {
     this.dataService.getById<Slide>(`/Slide/GetByPageId`, pageId).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<Slide>) => {
-      let slideList: SlideMedia[] = this.page.backgroundPath ? [{ id: '', slideId: '', languageId: '', activity: true, buttonStyle: '', buttonText: '', displayOrder: -1, linkPage: '', linkPageId: '', routerLink: '', routerQueryParameters: '', summary: '', textStyle: '', title: '', backgroundImagePath: this.page.backgroundPath }] : [];
       if (response && response.isSuccess) {
-        if (slideList.length > 0)
-          this.galery = slideList.concat(response.dataSingle.slideMedias);
-        else
-          this.galery = response.dataSingle.slideMedias;
+        this.galery = response.dataSingle.slideMedias;
       }
 
     }, error => {
@@ -138,20 +140,22 @@ export class PageComponent implements OnInit {
   }
 
   getRecentPages() {
-    this.dataService.getDataList<Page>(`/Page/GetLatest/${this.page.parentPageId}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
-      if (response && response.isSuccess) {
-        this.recentBlogs = response.dataMulti;
-      }
-    }, error => {
-      if (isDevMode())
-        console.log(error);
-    })
+    if (this.page.parentPageId) {
+      this.dataService.getDataList<Page>(`/Page/GetLatest/${this.page.parentPageId}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<Page>) => {
+        if (response && response.isSuccess) {
+          this.recentBlogs = response.dataMulti.filter(x => x.name != null);
+        }
+      }, error => {
+        if (isDevMode())
+          console.log(error);
+      })
+    }
   }
 
   getRecentBlogs() {
     this.dataService.getDataList<Page>(`/Page/GetLatestBlogs}`).pipe(takeUntil(this.unsubscribe)).subscribe((response: IApiResponse<any>) => {
       if (response && response.isSuccess) {
-        this.recentBlogs = response.dataMulti;
+        this.recentBlogs = response.dataMulti.filter(x => x.name != null);
       }
     }, error => {
       if (isDevMode())
